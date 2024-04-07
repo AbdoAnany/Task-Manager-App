@@ -1,1 +1,0 @@
-enum SyncErrorType { duplicatedId, blacklist }

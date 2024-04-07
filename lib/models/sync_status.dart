@@ -1,1 +1,0 @@
-enum SyncStatus { idle, pending }

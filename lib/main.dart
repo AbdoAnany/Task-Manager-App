@@ -1,24 +1,63 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:task_manager/app.dart';
-import 'package:task_manager/blocs/drifted_bloc/drifted_bloc.dart';
-import 'package:task_manager/blocs/drifted_bloc/drifted_storage.dart';
-import 'package:task_manager/firebase_options.dart';
-import 'package:task_manager/messaging/background_handler.dart';
-import 'package:task_manager/services/locator_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_manager/project/tasks/bloc/tasks_bloc.dart';
+import 'package:task_manager/routes/app_router.dart';
+import 'package:task_manager/bloc_state_observer.dart';
+import 'package:task_manager/routes/pages.dart';
+import 'package:task_manager/project/tasks/data/local/data_sources/tasks_data_provider.dart';
+import 'package:task_manager/project/tasks/data/repository/task_repository.dart';
+import 'package:task_manager/utils/color_palette.dart';
 
-void main() async{
-  Paint.enableDithering = true;
-  setupLocator();
+import 'core/di/dependency_injection.dart';
+import 'core/theming/colors.dart';
 
+
+
+class Get {
+  static  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  static BuildContext get context => navigatorKey.currentContext!;
+  static NavigatorState get navigator => navigatorKey.currentState!;
+}
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  FirebaseMessaging.onBackgroundMessage(BackgroundHandler.onBackgroundMessage);
+  Bloc.observer = BlocStateOberver();
+  await setupGetIt();
+  runApp(MyApp());
+}
 
-  final storage = await DriftedStorage.build();
-  DriftedBlocOverrides.runZoned(
-    () => runApp(const MyApp()),
-    storage: storage
-  );
+class MyApp extends StatelessWidget {
+
+
+  const MyApp({super.key,});
+
+  @override
+  Widget build(BuildContext context) {
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      child: RepositoryProvider(
+          create: (context) => TaskRepository(taskDataProvider: TaskDataProvider(getIt<SharedPreferences>())),
+          child: BlocProvider(
+              create: (context) => TasksBloc(context.read<TaskRepository>()),
+              child: MaterialApp(
+                navigatorKey: Get.navigatorKey,
+
+                title: 'Task Manager',
+                debugShowCheckedModeBanner: false,
+                initialRoute: Pages.initial,
+                onGenerateRoute: onGenerateRoute,
+                theme: ThemeData(
+                  fontFamily: 'Sora',
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                  canvasColor: Colors.transparent,
+                  colorScheme: ColorScheme.fromSeed(seedColor:  ColorsManager.primaryColor),
+                  useMaterial3: true,
+                ),
+              ))),
+    );
+  }
 }
