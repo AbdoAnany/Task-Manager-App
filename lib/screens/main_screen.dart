@@ -16,7 +16,7 @@ class MainScreen extends StatelessWidget{
       backgroundColor: customTheme.backgroundColor,
 
       animationDuration: cTransitionDuration,
-      transitionBuilder: (context, child, animation) {
+      builder: (context, child, animation) {
         return FadeTransition(
           opacity: animation,
           child: SafeArea(

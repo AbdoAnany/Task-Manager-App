@@ -34,41 +34,42 @@ class DriftedDatabase extends _$DriftedDatabase{
 
   Future<void> insertOrReplaceState(DriftedStates state) async {
     try{
-      await into(DriftedStates)
-        .insert(state, mode: InsertMode.insertOrReplace);
+      // await into(state)
+      //   .insert(state, mode: InsertMode.insertOrReplace);
     }
     catch(_) {}
   }
 
-  Future<List<DriftedStates>?>? getStates() async {
+  Future<List<DriftedStates>?> getStates() async {
     try{
-      return select(DriftedStates).get();
+     // return  await select(DriftedStates).get();
+      return [];
     }
     catch(_) {}
     return null;
   }
 
   Future<void> deleteState(String key) async {
-    try{
-      await (delete(DriftedStates)
-        ..where((s) => s.key.equals(key))
-      ).go();
-    }
-    catch(_) {}
+    // try{
+    //   await (delete(DriftedStates)
+    //     ..where((s) => s.key.equals(key))
+    //   ).go();
+    // }
+    // catch(_) {}
   }
 
   Stream<List<DriftedStates>>? get watch {
-    try{
-      return select(DriftedStates).watch();
-    }
-    catch(_) {}
+    // try{
+    //   return select(DriftedStates).watch();
+    // }
+    // catch(_) {}
     return null;
   }
 
   Future<void> clear() async {
-    try{
-      await delete(DriftedStates).go();
-    }
-    catch(_) {}
-  }
-}
+  //   try{
+  //     await delete(DriftedStates).go();
+  //   }
+  //   catch(_) {}
+  // }
+}}

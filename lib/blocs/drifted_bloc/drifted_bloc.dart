@@ -87,17 +87,17 @@ mixin DriftedMixin<State> on BlocBase<State> {
   void _init() {
     _storageSubscription = _storage.watch(storageToken)?.listen((driftedStates) {
       if(driftedStates != null){
-        if(_updatedAt != null && driftedStates.dateTime().isAfter(_updatedAt!)){
-         
-          final newState = _fromJson(driftedStates.state);
-          if(newState != null){
-
-            final a = jsonEncode(_toJson(state));
-            final b = jsonEncode(driftedStates.state);
-            
-            if(a != b) emit(newState);
-          }
-        }
+        // if(_updatedAt != null && driftedStates.dateTime().isAfter(_updatedAt!)){
+        //
+        //   final newState = _fromJson(driftedStates.state);
+        //   if(newState != null){
+        //
+        //     final a = jsonEncode(_toJson(state));
+        //     final b = jsonEncode(driftedStates.state);
+        //
+        //     if(a != b) emit(newState);
+        //   }
+        // }
       }
     });
   }
