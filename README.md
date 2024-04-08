@@ -37,15 +37,20 @@ This project is a starting point for a Flutter application. To get started:
 <img src="screen/Screenshot_1.png"  height="1000em">
 
 ## Login Screen
+User Authentication: Secure user login via email and password using the /api/login endpoint from reqres.in.
+example email: eve.holt@reqres.in  password: Aa@12345
 <img src="screen/Screenshot_2.png"  height="1000em">
 <img src="screen/Screenshot_3.png"  height="1000em">
 
 
 ## Users Screen 
+ Full CRUD functionality (Create, Read, Update, Delete) for tasks. Utilizes reqres.in endpoints such as /api/users for managing task data.
+ Efficient pagination for handling a large number of tasks, leveraging the /api/users?page={page_number} endpoint.
 <img src="screen/Screenshot_4.png"  height="1000em">
 <img src="screen/Screenshot_5.png"  height="1000em">
 
 ## User Task Screen
+Tasks are persisted locally using Flutter's shared preferences to ensure accessibility even when the app is closed and reopened.
 <img src="screen/Screenshot_6.png"  height="1000em">
 <img src="screen/Screenshot_8.png"  height="1000em">
 <img src="screen/Screenshot_10.png"  height="1000em">
