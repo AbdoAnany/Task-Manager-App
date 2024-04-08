@@ -9,7 +9,10 @@ import '../core/di/dependency_injection.dart';
 import '../page_not_found.dart';
 import '../project/login/logic/cubit/login_cubit.dart';
 import '../project/login/ui/login_screen.dart';
+import '../project/tasks/bloc/tasks_bloc.dart';
+import '../project/tasks/ui/pages/new_task_screen.dart';
 import '../project/tasks/ui/pages/tasks_screen.dart';
+import '../project/tasks/ui/pages/update_task_screen.dart';
 import '../project/users/ui/pages/user_screen.dart';
 
 Route onGenerateRoute(RouteSettings routeSettings) {
@@ -28,6 +31,18 @@ Route onGenerateRoute(RouteSettings routeSettings) {
           create: (context) => getIt<LoginCubit>(),
           child: const LoginScreen(),
         ),
+      );    case Pages.createNewTask:
+      return MaterialPageRoute(
+        builder: (_) => BlocProvider(
+          create: (context) => getIt<TasksBloc>(),
+          child: const NewTaskScreen(),
+        ),
+      ); case Pages.updateTask:
+      return MaterialPageRoute(
+        builder: (_) => BlocProvider(
+          create: (context) => getIt<TasksBloc>(),
+          child:  UpdateTaskScreen(taskModel: routeSettings,),
+        ),      settings: routeSettings
       );
     case Pages.userScreen:
       return MaterialPageRoute(
