@@ -8,7 +8,7 @@ import '../models/user_response.dart';
 
 class UserLocalDataSource {
   List<UserModel> users = [];
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
 
   UserLocalDataSource(this.prefs);
 
@@ -16,7 +16,7 @@ class UserLocalDataSource {
 
 
   Future<UserResponse?> getUsersFromPrefs(page) async {
-    final jsonString = prefs.getString('user_response$page');
+    final jsonString = prefs?.getString('user_response$page');
     if (jsonString != null) {
       final jsonData = json.decode(jsonString);
       return UserResponse.fromJson(jsonData);
@@ -27,7 +27,7 @@ class UserLocalDataSource {
   Future<void> saveUsersToPrefs(UserResponse userResponse) async {
     final jsonData = userResponse.toJson();
     final jsonString = json.encode(jsonData);
-    await prefs.setString('user_response${userResponse.page}', jsonString);
+    await prefs?.setString('user_response${userResponse.page}', jsonString);
   }
 // return [];
 
