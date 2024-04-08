@@ -219,8 +219,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                                           startDateTime: _rangeStart,
                                           stopDateTime: _rangeEnd);
                                       context.read<TasksBloc>().add(
-                                          AddNewTaskEvent(
-                                              taskModel: taskModel));
+                                          AddNewTaskEvent(taskModel: taskModel));
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(15),

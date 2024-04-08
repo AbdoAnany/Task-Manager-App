@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_manager/project/users/data/models/user_model.dart';
 
 import '../data/local/model/task_model.dart';
 import '../data/repository/task_repository.dart';
@@ -13,12 +14,15 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
   TasksBloc(this.taskRepository) : super(FetchTasksSuccess(tasks: const [])) {
     on<AddNewTaskEvent>(_addNewTask);
+    on<SelectUserEvent>(_selectUser);
     on<FetchTaskEvent>(_fetchTasks);
     on<UpdateTaskEvent>(_updateTask);
     on<DeleteTaskEvent>(_deleteTask);
     on<SortTaskEvent>(_sortTasks);
     on<SearchTaskEvent>(_searchTasks);
   }
+
+ static UserModel userModel=UserModel(id: 0, email: '', firstName: 'dsdsad', lastName: '', avatar: '');
 
   _addNewTask(AddNewTaskEvent event, Emitter<TasksState> emit) async {
     emit(TasksLoading());
@@ -37,9 +41,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       }
       await taskRepository.createNewTask(event.taskModel);
       emit(AddTasksSuccess());
-      final tasks = await taskRepository.getTasks();
+      final tasks = await taskRepository.getTasks(userModel);
       return emit(FetchTasksSuccess(tasks: tasks));
     } catch (exception) {
+      print("ddddddddddddexception.toString()");
+      print(exception.toString());
       emit(AddTaskFailure(error: exception.toString()));
     }
   }
@@ -47,7 +53,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   void _fetchTasks(FetchTaskEvent event, Emitter<TasksState> emit) async {
     emit(TasksLoading());
     try {
-      final tasks = await taskRepository.getTasks();
+      final tasks = await taskRepository.getTasks(userModel);
       return emit(FetchTasksSuccess(tasks: tasks));
     } catch (exception) {
       emit(LoadTaskFailure(error: exception.toString()));
@@ -91,6 +97,10 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   _sortTasks(SortTaskEvent event, Emitter<TasksState> emit) async {
     final tasks = await taskRepository.sortTasks(event.sortOption);
     return emit(FetchTasksSuccess(tasks: tasks));
+  }
+  _selectUser(SelectUserEvent event, Emitter<TasksState> emit) async {
+    final user = await taskRepository.selectUser(event.userModel);
+    return emit(FetchUserSuccess(user: user));
   }
 
   _searchTasks(SearchTaskEvent event, Emitter<TasksState> emit) async {

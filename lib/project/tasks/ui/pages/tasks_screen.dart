@@ -10,6 +10,7 @@ import 'package:task_manager/utils/color_palette.dart';
 import 'package:task_manager/utils/util.dart';
 
 import '../../../../components/widgets.dart';
+import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../routes/pages.dart';
 import '../../../../utils/font_sizes.dart';
@@ -38,15 +39,8 @@ class _TasksScreenState extends State<TasksScreen> {
   @override
   Widget build(BuildContext context) {
     UserModel arguments ;
-    if( ModalRoute.of(context)!.settings.arguments==null) {
-      arguments=UserModel(id: 1, email: '',firstName: '', lastName: '', avatar: '',);
-    } else{
-      arguments =ModalRoute.of(context)!.settings.arguments  as UserModel;
+    arguments =ModalRoute.of(context)!.settings.arguments  as UserModel;
 
-    }
-
-    print("ssssssssssssssssssssssssssssssssssss arguments");
-    print(arguments.firstName);
     var size = MediaQuery.of(context).size;
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
@@ -56,7 +50,7 @@ class _TasksScreenState extends State<TasksScreen> {
             child: Scaffold(
           backgroundColor:  ColorsManager.white,
           appBar: CustomAppBar(
-            title: arguments.firstName +' '+arguments.lastName,
+            title: '${arguments.firstName} ${arguments.lastName}',
             image: arguments.avatar,
             showBackArrow: false,
             actionWidgets: [

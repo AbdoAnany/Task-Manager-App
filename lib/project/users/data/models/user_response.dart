@@ -1,94 +1,59 @@
+import 'package:json_annotation/json_annotation.dart';
 
+part 'user_response.g.dart';
+
+@JsonSerializable()
 class UserResponse {
-  int? page;
-  int? perPage;
-  int? total;
-  int? totalPages;
-  List<Data>? data;
-  Support? support;
+  late int page;
+  @JsonKey(name: 'per_page')
 
-  UserResponse(
-      {this.page,
-      this.perPage,
-      this.total,
-      this.totalPages,
-      this.data,
-      this.support});
+  late int perPage;
 
-  UserResponse.fromJson(Map<String, dynamic> json) {
-    page = json['page'];
-    perPage = json['per_page'];
-    total = json['total'];
-    totalPages = json['total_pages'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
-    support =
-        json['support'] != null ? new Support.fromJson(json['support']) : null;
+  late int total;
+  @JsonKey(name: 'total_pages')
+  late int totalPages;
+  late List<UserData> data;
+
+  UserResponse({
+    required this.page,
+    required this.perPage,
+    required this.total,
+    required this.totalPages,
+    required this.data,
+  });
+
+  factory UserResponse.fromJson(Map<String, dynamic> json) {
+
+    print('UserResponsessssssssssssssssssssssssssssssssssssss');
+    print(json);
+    return _$UserResponseFromJson(json);
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['page'] = this.page;
-    data['per_page'] = this.perPage;
-    data['total'] = this.total;
-    data['total_pages'] = this.totalPages;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    if (this.support != null) {
-      data['support'] = this.support!.toJson();
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => _$UserResponseToJson(this);
 }
 
-class Data {
-  int? id;
-  String? email;
-  String? firstName;
-  String? lastName;
-  String? avatar;
+@JsonSerializable()
+class UserData {
+  late int id;
+  late String email;
+  @JsonKey(name: 'first_name')
 
-  Data({this.id, this.email, this.firstName, this.lastName, this.avatar});
+  late String firstName;
+  @JsonKey(name: 'last_name')
 
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    email = json['email'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    avatar = json['avatar'];
-  }
+  late String lastName;
+  late String avatar;
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['email'] = this.email;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['avatar'] = this.avatar;
-    return data;
-  }
-}
+  UserData({
+    required this.id,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.avatar,
+  });
 
-class Support {
-  String? url;
-  String? text;
+  factory UserData.fromJson(Map<String, dynamic> json) =>
+      _$UserDataFromJson(json);
 
-  Support({this.url, this.text});
-
-  Support.fromJson(Map<String, dynamic> json) {
-    url = json['url'];
-    text = json['text'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['url'] = this.url;
-    data['text'] = this.text;
-    return data;
-  }
+  Map<String, dynamic> toJson() => _$UserDataToJson(this);
 }

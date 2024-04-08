@@ -9,6 +9,12 @@ final class FetchTasksSuccess extends TasksState {
 
   FetchTasksSuccess({required this.tasks, this.isSearching = false});
 }
+final class FetchUserSuccess extends TasksState {
+  final UserModel user;
+
+
+  FetchUserSuccess({required this.user,});
+}
 
 final class AddTasksSuccess extends TasksState {}
 

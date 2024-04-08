@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/project/tasks/data/local/model/task_model.dart';
+import 'package:task_manager/project/users/data/models/user_model.dart';
 import 'package:task_manager/utils/exception_handler.dart';
 
+import '../../../../../core/di/dependency_injection.dart';
 import '../../../../../utils/constants.dart';
+import '../../../bloc/tasks_bloc.dart';
 
 class TaskDataProvider {
   List<TaskModel> tasks = [];
@@ -11,13 +14,17 @@ class TaskDataProvider {
 
   TaskDataProvider(this.prefs);
 
-  Future<List<TaskModel>> getTasks() async {
+  Future<List<TaskModel>> getTasks(UserModel userModel) async {
     try {
-      final List<String>? savedTasks = prefs!.getStringList(Constants.taskKey);
+
+      print('userModel.id userModel.id userModel.iduserModel.id');
+      print(userModel.id);
+      print(userModel.firstName);
+      print(Constants.taskKey+ userModel.id.toString());
+      final List<String>? savedTasks = prefs!.getStringList(Constants.taskKey+ userModel.id.toString());
+      print(savedTasks);
       if (savedTasks != null) {
-        tasks = savedTasks
-            .map((taskJson) => TaskModel.fromJson(json.decode(taskJson)))
-            .toList();
+        tasks = savedTasks.map((taskJson) => TaskModel.fromJson(json.decode(taskJson))).toList();
         tasks.sort((a, b) {
           if (a.completed == b.completed) {
             return 0;
@@ -27,6 +34,8 @@ class TaskDataProvider {
             return -1;
           }
         });
+      }else{
+        tasks = [];
       }
       return tasks;
     }catch(e){
@@ -75,11 +84,15 @@ class TaskDataProvider {
   }
 
   Future<void> createTask(TaskModel taskModel) async {
+    print("getIt<TasksBloc>().userModel.id.toString()");
+    print(TasksBloc.userModel.id.toString());
     try {
+
+
       tasks.add(taskModel);
       final List<String> taskJsonList =
           tasks.map((task) => json.encode(task.toJson())).toList();
-      await prefs!.setStringList(Constants.taskKey, taskJsonList);
+      await prefs!.setStringList(Constants.taskKey+  TasksBloc.userModel.id.toString(), taskJsonList);
     } catch (exception) {
       throw Exception(handleException(exception));
     }
@@ -100,7 +113,7 @@ class TaskDataProvider {
       });
       final List<String> taskJsonList = tasks.map((task) =>
           json.encode(task.toJson())).toList();
-      prefs!.setStringList(Constants.taskKey, taskJsonList);
+      prefs!.setStringList(Constants.taskKey+  TasksBloc.userModel.id.toString(), taskJsonList);
       return tasks;
     } catch (exception) {
       throw Exception(handleException(exception));
@@ -112,7 +125,7 @@ class TaskDataProvider {
       tasks.remove(taskModel);
       final List<String> taskJsonList = tasks.map((task) =>
           json.encode(task.toJson())).toList();
-      prefs!.setStringList(Constants.taskKey, taskJsonList);
+      prefs!.setStringList(Constants.taskKey+ TasksBloc.userModel.id.toString(), taskJsonList);
       return tasks;
     } catch (exception) {
       throw Exception(handleException(exception));
@@ -127,5 +140,12 @@ class TaskDataProvider {
       final descriptionMatches = task.description.toLowerCase().contains(searchText);
       return titleMatches || descriptionMatches;
     }).toList();
+  }
+
+  Future<UserModel>  selectUser(UserModel userModel) async {
+    TasksBloc.userModel = userModel;
+
+ await   prefs!.setString(userModel.id.toString(), json.encode(userModel.toJson()));
+    return userModel;
   }
 }

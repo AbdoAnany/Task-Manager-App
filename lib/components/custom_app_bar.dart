@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -45,15 +46,27 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         children: [
 
-          Container(
-            width: 50.w,
+          CachedNetworkImage(
+            imageUrl: image!,   width: 50.w,
             height: 50.w,
-            decoration: BoxDecoration(
-              image: DecorationImage(
+            imageBuilder: (context, imageProvider) => Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                image: DecorationImage(
+                  image: imageProvider,
                   fit: BoxFit.cover,
-                  image: NetworkImage(image!)),
-              borderRadius: BorderRadius.circular(50),),
-          //  margin: EdgeInsets.only(right: 12.w,),
+
+                  // colorFilter:
+                  // ColorFilter.mode(Colors.red, BlendMode.colorBurn)
+                ),
+              ),
+            ),
+            placeholder: (context, url) => Padding(
+              padding:  EdgeInsets.all(20.0.h),
+              child: CircularProgressIndicator(),
+            ), // Placeholder widget while loading
+            errorWidget: (context, url, error) => Icon(Icons.error), // Widget to display if image fails to load
+            fit: BoxFit.cover, // Adjust how the image fits within the container
           ),
           SizedBox(width: 12.w,),
           buildText(title,  ColorsManager.black, textXExtraLarge, FontWeight.w500,

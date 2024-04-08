@@ -22,6 +22,11 @@ class UpdateTaskEvent extends TasksEvent {
 
   UpdateTaskEvent({required this.taskModel});
 }
+class SelectUserEvent extends TasksEvent {
+  final UserModel userModel;
+
+  SelectUserEvent({required this.userModel});
+}
 
 class DeleteTaskEvent extends TasksEvent {
   final TaskModel taskModel;
