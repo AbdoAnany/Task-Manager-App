@@ -33,4 +33,4 @@ This project is a starting point for a Flutter application. To get started:
 * Flutter Codelab: Step-by-step guide to writing your first Flutter app.
 * Feel free to explore these resources to enhance your understanding of Flutter development.
 ## Demo
-<img src="screen/Screenshot_1.png"  height="500em">
+<img src="screen/Screenshot_1.png"  height="1000em">
