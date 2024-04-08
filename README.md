@@ -40,8 +40,6 @@ This project is a starting point for a Flutter application. To get started:
 <img src="screen/Screenshot_2.png"  height="1000em">
 <img src="screen/Screenshot_3.png"  height="1000em">
 
-## Login Screen
-
 
 ## Users Screen 
 <img src="screen/Screenshot_4.png"  height="1000em">
@@ -52,6 +50,6 @@ This project is a starting point for a Flutter application. To get started:
 <img src="screen/Screenshot_8.png"  height="1000em">
 <img src="screen/Screenshot_10.png"  height="1000em">
 
-## Add Task Screen
+## Add and Update Task Screen
 <img src="screen/Screenshot_7.png"  height="1000em">
-
+<img src="screen/Screenshot_11.png"  height="1000em">
