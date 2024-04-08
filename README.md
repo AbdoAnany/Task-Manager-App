@@ -32,9 +32,26 @@ This project is a starting point for a Flutter application. To get started:
 * Flutter Cookbook: Provides useful Flutter samples for various tasks and scenarios.
 * Flutter Codelab: Step-by-step guide to writing your first Flutter app.
 * Feel free to explore these resources to enhance your understanding of Flutter development.
-* 
+  
 ## Splash Screen
 <img src="screen/Screenshot_1.png"  height="1000em">
 
 ## Login Screen
 <img src="screen/Screenshot_2.png"  height="1000em">
+<img src="screen/Screenshot_3.png"  height="1000em">
+
+## Login Screen
+
+
+## Users Screen 
+<img src="screen/Screenshot_4.png"  height="1000em">
+<img src="screen/Screenshot_5.png"  height="1000em">
+
+## User Task Screen
+<img src="screen/Screenshot_6.png"  height="1000em">
+<img src="screen/Screenshot_8.png"  height="1000em">
+<img src="screen/Screenshot_10.png"  height="1000em">
+
+## Add Task Screen
+<img src="screen/Screenshot_7.png"  height="1000em">
+
