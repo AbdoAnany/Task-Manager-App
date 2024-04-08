@@ -1,7 +1,7 @@
 # Task Manager App
 
 ## Overview
-This Flutter application serves as a task manager, allowing users to efficiently manage their tasks. It features user authentication, task management functionalities, pagination, state management, local storage, and unit tests.
+This Flutter app serves as a task manager, empowering users to efficiently organize their tasks. It incorporates robust user authentication, seamless task management functionalities, efficient pagination, state management, local storage for persistent data, and comprehensive unit tests to ensure reliability.
 
 ## Instructions for Building and Running the App
 
