@@ -37,7 +37,14 @@ class _TasksScreenState extends State<TasksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final  UserModel arguments = ModalRoute.of(context)!.settings.arguments  as UserModel;
+    UserModel arguments ;
+    if( ModalRoute.of(context)!.settings.arguments==null) {
+      arguments=UserModel(id: 1, email: '',firstName: '', lastName: '', avatar: '',);
+    } else{
+      arguments =ModalRoute.of(context)!.settings.arguments  as UserModel;
+
+    }
+
     print("ssssssssssssssssssssssssssssssssssss arguments");
     print(arguments.firstName);
     var size = MediaQuery.of(context).size;
