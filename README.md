@@ -3,7 +3,7 @@
 ## Overview
 This Flutter application serves as a task manager, allowing users to efficiently manage their tasks. It features user authentication, task management functionalities, pagination, state management, local storage, and unit tests.
 
-## Getting Started
+## Instructions for Building and Running the App
 
 This project is a starting point for a Flutter application. To get started:
 
@@ -13,6 +13,19 @@ This project is a starting point for a Flutter application. To get started:
 4. Run flutter pub get to install dependencies.
 5. Connect your device or start an emulator.
 6. Run flutter run to build and launch the app on your device/emulator.
+
+   
+## Design Decisions
+* Explain key design choices, such as the selection of state management pattern and local storage method.
+* Justify the use of specific libraries or packages for certain functionalities.
+
+## Challenges Faced
+* Describe any hurdles encountered during the development process and how they were addressed.
+* Highlight any particularly tricky aspects of implementation.
+
+## Additional Features Implemented
+* List any extra features beyond the specified requirements that were added to enhance the app's functionality or user experience.
+
 
 ## Additional Resources
 * Flutter Documentation: Offers tutorials, samples, guidance on mobile development, and a full API reference.
