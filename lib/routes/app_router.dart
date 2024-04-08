@@ -38,7 +38,7 @@ Route onGenerateRoute(RouteSettings routeSettings) {
       );
 
 
-    case Pages.home:
+    case Pages.tasksScreen:
       return MaterialPageRoute(
         builder: (context) => const TasksScreen(),
         settings: routeSettings

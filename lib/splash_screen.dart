@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'components/widgets.dart';
+import 'core/di/dependency_injection.dart';
 import 'core/theming/colors.dart';
 import 'routes/pages.dart';
 import 'utils/color_palette.dart';
@@ -19,11 +21,13 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
+
   startTimer() async {
+   bool? isLogin =getIt<SharedPreferences>().getBool('isLogin')??false;
     Future.delayed(const Duration(milliseconds: 3000), () {
       Navigator.pushNamedAndRemoveUntil(
         context,
-        Pages.loginScreen,
+        isLogin?  Pages.userScreen:  Pages.loginScreen,
             (route) => false,
       );
     });

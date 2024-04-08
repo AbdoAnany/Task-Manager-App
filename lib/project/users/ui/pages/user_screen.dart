@@ -95,7 +95,7 @@ class _UserScreenState extends State<UserScreen> {
                       itemBuilder: (context, index) {
                         UserModel   user = state.users[index];
                         return InkWell(onTap: (){
-                          context.pushNamed(Pages.home,arguments:user );
+                          context.pushNamed(Pages.tasksScreen,arguments:user );
 
                         },
                           child: Row(
