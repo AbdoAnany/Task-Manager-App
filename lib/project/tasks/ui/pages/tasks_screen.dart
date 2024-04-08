@@ -49,7 +49,7 @@ class _TasksScreenState extends State<TasksScreen> {
             child: Scaffold(
           backgroundColor:  ColorsManager.white,
           appBar: CustomAppBar(
-            title: arguments.firstName +' '+arguments.lastName,
+            title: '${arguments.firstName} ${arguments.lastName}',
             image: arguments.avatar,
             showBackArrow: false,
             actionWidgets: [
