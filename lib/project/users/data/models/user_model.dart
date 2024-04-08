@@ -6,11 +6,11 @@ class  UserModel {
   String avatar;
 
   UserModel({
-    required this.id,
-    required this.email,
-    required this.firstName,
-    required this.lastName,
-    required this.avatar,
+     this.id=0,
+     this.email='',
+     this.firstName='',
+     this.lastName='',
+     this.avatar='',
 
   });
 

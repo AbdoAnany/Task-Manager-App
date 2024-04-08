@@ -6,7 +6,11 @@ import 'package:get_it/get_it.dart';
 
 import '../../project/login/data/repos/login_repo.dart';
 import '../../project/login/logic/cubit/login_cubit.dart';
+import '../../project/tasks/bloc/tasks_bloc.dart';
+import '../../project/tasks/data/local/data_sources/tasks_data_provider.dart';
+import '../../project/tasks/data/repository/task_repository.dart';
 import '../../project/users/bloc/users_bloc.dart';
+import '../../project/users/data/data_sources/user_provider.dart';
 import '../../project/users/data/repository/user_repository.dart';
 // import '../../../project/sign_up/logic/sign_up_cubit.dart';
 
@@ -26,8 +30,14 @@ Future<void> setupGetIt() async {
   getIt.registerFactory<LoginCubit>(() => LoginCubit(getIt()));
 
   // user
-  getIt.registerLazySingleton<UserRepository>(() => UserRepository(apiService: getIt()));
+  getIt.registerLazySingleton<UserLocalDataSource>(() => UserLocalDataSource( getIt()));
+  getIt.registerLazySingleton<UserRepository>(() => UserRepository( getIt(), getIt()));
   getIt.registerFactory<UsersBloc>(() => UsersBloc(getIt()));
+
+  // task
+  getIt.registerLazySingleton<TaskDataProvider>(() => TaskDataProvider(getIt()));
+  getIt.registerLazySingleton<TaskRepository>(() => TaskRepository(taskDataProvider:  getIt()));
+  getIt.registerFactory<TasksBloc>(() => TasksBloc(getIt()));
 
 
 }
