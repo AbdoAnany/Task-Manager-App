@@ -32,5 +32,7 @@ This project is a starting point for a Flutter application. To get started:
 * Flutter Cookbook: Provides useful Flutter samples for various tasks and scenarios.
 * Flutter Codelab: Step-by-step guide to writing your first Flutter app.
 * Feel free to explore these resources to enhance your understanding of Flutter development.
-## Demo
+## Splash Screen
 <img src="screen/Screenshot_1.png"  height="1000em">
+## Login Screen
+<img src="screen/Screenshot_2.png"  height="1000em">
