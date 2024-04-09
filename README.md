@@ -56,9 +56,9 @@ password: Aa@12345
 ## User Task Screen
 Tasks are persisted locally using Flutter's shared preferences to ensure accessibility even when the app is closed and reopened.
 
-<img src="screen/Screenshot_6.png"  height="1000em">
-<img src="screen/Screenshot_8.png"  height="1000em">
-<img src="screen/Screenshot_10.png"  height="1000em">
+<img src="screen/Screenshot_6.png"  height="1000em"><img src="screen/Screenshot_8.png"  height="1000em"><img src="screen/Screenshot_10.png"  height="1000em">
+
+
 
 ## Add and Update Task Screen
 
