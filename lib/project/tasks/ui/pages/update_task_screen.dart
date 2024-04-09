@@ -81,7 +81,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                         listener: (context, state) {
                       if (state is UpdateTaskFailure) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            getSnackBar(state.error,  ColorsManager.red));
+                            getSnackBar(state.error,  ColorsManager.error));
                       }
                       if (state is UpdateTaskSuccess) {
                         context.pushReplacementNamed(Pages.tasksScreen ,  arguments: TasksBloc.userModel);

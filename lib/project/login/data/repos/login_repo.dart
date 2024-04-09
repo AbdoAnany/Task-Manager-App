@@ -5,7 +5,7 @@ import 'package:task_manager/project/login/data/models/login_request_body.dart';
 import 'package:task_manager/project/login/data/models/login_response.dart';
 
 class LoginRepo {
-  final ApiService _apiService;
+  final RemoteDataSource _apiService;
 
   LoginRepo(this._apiService);
 

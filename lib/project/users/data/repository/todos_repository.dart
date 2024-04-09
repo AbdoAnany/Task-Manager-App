@@ -9,38 +9,23 @@ import 'package:task_manager/project/users/data/models/user_response.dart';
 import '../../../../core/networking/api_service.dart';
 import '../data_sources/user_provider.dart';
 
-// class UserRepository{
-//   final ApiService apiService;
-//
-//   UserRepository({required this.apiService});
-//
-//   Future<UserResponse> getUsers(int id) async {
-//
-//     return await apiService.getUsers( id);
-//   }
-//
-//
-//
-// }
 
-class UserRepository {
+
+class TodoRepository {
   // final UserLocalDataSource localDataSource;
   // final UserRemoteDataSource remoteDataSource;
   //
-  UserRepository(
+  TodoRepository(
     this.localDataSource,
     this.remoteDataSource,
   );
   final RemoteDataSource? remoteDataSource;
   final UserLocalDataSource? localDataSource;
 
-  Future<UserResponse?> getUsers({
-    int skip=0,
-    int limit=10,
-  }) async {
+  Future<UserResponse?> getTodos(int id) async {
     // First, try to fetch data from the local data source
     try {
-      final userResponse = await localDataSource?.getUsersFromPrefs(skip: skip,limit: limit);
+      final userResponse = await localDataSource?.getUsersFromPrefs(limit: 10,skip: 0);
       // Check if data is available in the local data source
       if (userResponse != null) {
         return userResponse;
@@ -52,7 +37,7 @@ class UserRepository {
 
     // If data is not available locally, fetch it from the remote data source
     try {
-      final userResponse = await remoteDataSource?.getUsers(limit:limit ,skip: skip);
+      final userResponse = await remoteDataSource?.getUsers(limit: 10,skip: 0);
       // Update the local data source with the fetched data
       await localDataSource?.saveUsersToPrefs(userResponse!);
       return userResponse;

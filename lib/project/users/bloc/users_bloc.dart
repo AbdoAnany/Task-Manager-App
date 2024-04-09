@@ -27,17 +27,19 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   void _fetchUsers(FetchUserEvent event, Emitter<UsersState> emit) async {
     emit(UsersLoading());
     try {
-      final user = await usersRepository.getUsers(event.page);
+      final user = await usersRepository.getUsers(limit: event.limit,skip: event.skip);
       usersList.clear();
-      usersList.addAll(user!.data!.map((e) => UserModel(id: e.id!, email: e.email!, firstName: e.firstName!, lastName: e.lastName!, avatar: e.avatar!)).toList());
+      usersList.addAll(user!.data!.map((e) => UserModel(id: e.id!, email: e.email!,
+          firstName: e.firstName!, lastName: e.lastName!, avatar: e.avatar!)).toList());
       return emit(FetchUsersSuccess(
           users: usersList,
+          limit: user.limit,
 
-          page:user.page!,
-        total:user.total!,
-        totalPages:user.totalPages!,
+          page:user.page,
+        total:user.total,
+    //    totalPages:user.totalPages,
 
-        perPage:user.perPage!,
+      //  perPage:user.perPage,
       ));
     } catch (exception) {
       print("s  ssdfasdfsf exception");

@@ -39,6 +39,31 @@ class TaskDataProvider {
       throw Exception(handleException(e));
     }
   }
+  Future<List<TaskModel>> getAllTasks() async {
+    try {
+
+
+      final List<String>? savedTasks = prefs!.getStringList(Constants.getAllTasks);
+      print(savedTasks);
+      if (savedTasks != null) {
+        tasks = savedTasks.map((taskJson) => TaskModel.fromJson(json.decode(taskJson))).toList();
+        tasks.sort((a, b) {
+          if (a.completed == b.completed) {
+            return 0;
+          } else if (a.completed) {
+            return 1;
+          } else {
+            return -1;
+          }
+        });
+      }else{
+        tasks = [];
+      }
+      return tasks;
+    }catch(e){
+      throw Exception(handleException(e));
+    }
+  }
 
   Future<List<TaskModel>> sortTasks(int sortOption) async {
     switch (sortOption) {

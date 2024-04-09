@@ -31,7 +31,7 @@ class UserScreen extends StatefulWidget {
 class _UserScreenState extends State<UserScreen> {
   @override
   void initState() {
-    context.read<UsersBloc>().add(FetchUserEvent(page: 1));
+    context.read<UsersBloc>().add(FetchUserEvent());
     super.initState();
   }
 
@@ -56,7 +56,7 @@ class _UserScreenState extends State<UserScreen> {
           }
 
           if (state is FetchUsersSuccess) {
-            return state.users.isNotEmpty || state.isSearching
+            return state.users!.isNotEmpty || state.isSearching??false
                 ? Column(
                     children: [
                       SizedBox(height: 50.h,
@@ -103,9 +103,9 @@ class _UserScreenState extends State<UserScreen> {
                       ),
                       Expanded(
                           child: ListView.separated(
-                        itemCount: state.users.length,
+                        itemCount: state.users!.length,
                         itemBuilder: (context, index) {
-                          UserModel user = state.users[index];
+                          UserModel? user = state.users?[index];
 
 
                           return InkWell(
@@ -113,7 +113,7 @@ class _UserScreenState extends State<UserScreen> {
                               // TasksBloc.userModel=user;
                               context
                                   .read<TasksBloc>()
-                                  .add(SelectUserEvent(userModel: user));
+                                  .add(SelectUserEvent(userModel: user!));
                               print(TasksBloc.userModel.id);
                               print(TasksBloc.userModel.firstName);
                               context.pushNamed(Pages.tasksScreen,
@@ -129,7 +129,7 @@ class _UserScreenState extends State<UserScreen> {
                                   ),
                                   margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
                                   child: CachedNetworkImage(
-                                    imageUrl: user.avatar,   width: 75.w,
+                                    imageUrl: user?.avatar??'',   width: 75.w,
                                     height: 75.w,
                                     imageBuilder: (context, imageProvider) => Container(
                                       decoration: BoxDecoration(
@@ -156,18 +156,19 @@ class _UserScreenState extends State<UserScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      user.firstName,
+                                      "${user?.firstName}",
                                       style: TextStyles.font16DarkBlueMedium,
                                     ),
-                                    Text(
-                                      user.lastName,
+                                    Text(   "${user?.lastName}",
+
                                       style: TextStyles.font16DarkBlueMedium,
                                     ),
                                     SizedBox(
                                       height: 8.h,
                                     ),
                                     Text(
-                                      user.email,
+                                      "${user?.email}",
+
                                       style: TextStyles.font14GrayRegular,
                                     ),
                                   ],
@@ -186,7 +187,7 @@ class _UserScreenState extends State<UserScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(
-                            2,
+                            (state.total! ~/ state.limit!),
                             (index) => Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 8.w,
@@ -195,15 +196,18 @@ class _UserScreenState extends State<UserScreen> {
                                     onTap: () {
                                       if (state.page != index + 1) {
                                         context.read<UsersBloc>().add(
-                                            FetchUserEvent(page: (index + 1)));
+                                            FetchUserEvent(
+                                              limit: 10,skip:(index + 1) ,
+                                               )
+                                        );
                                       }
                                     },
                                     child: DecoratedBox(
                                         decoration: BoxDecoration(
                                             color: ColorsManager.primaryColor
-                                                .withOpacity(.7),
+                                                .withOpacity(.99),
                                             borderRadius:
-                                                BorderRadius.circular(12)),
+                                                BorderRadius.circular(50)),
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 20.w, vertical: 16.h),

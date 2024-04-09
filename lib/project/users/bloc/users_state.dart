@@ -4,14 +4,15 @@ part of 'users_bloc.dart';
 sealed class UsersState {}
 
 final class FetchUsersSuccess extends UsersState {
-  final List<UserModel> users;
+  final List<UserModel>? users;
   final bool isSearching;
-  final int page;
-  final int total;
-  final int totalPages;
-  final int perPage;
+  final int? page;
+  final int? total;
+  final int? limit;
+  final int? totalPages;
+  final int? perPage;
 
-  FetchUsersSuccess( { this.page=1,  this.total=0,  this.totalPages=0,  this.perPage=0, this.users=const [], this.isSearching = false});
+  FetchUsersSuccess( { this.page=1,  this.total=0, this.limit=0,  this.totalPages=0,  this.perPage=0, this.users=const [], this.isSearching = false});
 }
 
 final class AddUsersSuccess extends UsersState {}

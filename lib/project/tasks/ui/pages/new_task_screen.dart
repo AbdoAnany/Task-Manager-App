@@ -67,7 +67,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                         listener: (context, state) {
                       if (state is AddTaskFailure) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            getSnackBar(state.error,  ColorsManager.red));
+                            getSnackBar(state.error,  ColorsManager.error));
                       }
                       if (state is AddTasksSuccess) {
                         Navigator.pop(context);

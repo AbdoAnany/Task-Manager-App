@@ -41,12 +41,12 @@ Future<void> main() async {
        , (request) => request.reply(200, mockData));
 
    // Initialize ApiService, LoginRepo, and LoginCubit with Dio instance
-   final apiService = ApiService(dio);
+   final apiService = RemoteDataSource(dio);
    final loginRepo = LoginRepo(apiService);
 
    // Perform login operation
    final ApiResult<LoginResponse> loginResponse = await loginRepo.login(
-    LoginRequestBody(email: 'eve.holt@reqres.in', password: 'password'),
+    LoginRequestBody(username: 'eve.holt@reqres.in', password: 'password'),
 
    );
 

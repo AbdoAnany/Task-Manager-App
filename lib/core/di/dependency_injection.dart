@@ -3,12 +3,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/core/networking/api_service.dart';
 import 'package:task_manager/core/networking/dio_factory.dart';
 import 'package:get_it/get_it.dart';
+import 'package:task_manager/project/todos/data/repository/todos_repository.dart';
 
 import '../../project/login/data/repos/login_repo.dart';
 import '../../project/login/logic/cubit/login_cubit.dart';
 import '../../project/tasks/bloc/tasks_bloc.dart';
 import '../../project/tasks/data/local/data_sources/tasks_data_provider.dart';
 import '../../project/tasks/data/repository/task_repository.dart';
+import '../../project/todos/bloc/todos_bloc.dart';
+import '../../project/todos/data/data_sources/todos_provider.dart';
 import '../../project/users/bloc/users_bloc.dart';
 import '../../project/users/data/data_sources/user_provider.dart';
 import '../../project/users/data/repository/user_repository.dart';
@@ -19,7 +22,7 @@ final getIt = GetIt.instance;
 Future<void> setupGetIt() async {
   // Dio & ApiService
   Dio dio = DioFactory.getDio();
-  getIt.registerLazySingleton<ApiService>(() => ApiService(dio));
+  getIt.registerLazySingleton<RemoteDataSource>(() => RemoteDataSource(dio));
 
   // Caching
   SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -33,6 +36,11 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<UserLocalDataSource>(() => UserLocalDataSource( getIt()));
   getIt.registerLazySingleton<UserRepository>(() => UserRepository( getIt(), getIt()));
   getIt.registerFactory<UsersBloc>(() => UsersBloc(getIt()));
+
+  // todos
+  getIt.registerLazySingleton<TodosLocalDataSource>(() => TodosLocalDataSource(getIt()));
+  getIt.registerLazySingleton<TodosRepository>(() => TodosRepository( getIt(),  getIt()));
+  getIt.registerFactory<TodosBloc>(() => TodosBloc(getIt()));
 
   // task
   getIt.registerLazySingleton<TaskDataProvider>(() => TaskDataProvider(getIt()));

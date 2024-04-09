@@ -62,7 +62,7 @@ class BuildTextField extends StatelessWidget {
         errorStyle: const TextStyle(
           fontSize: textMedium,
           fontWeight: FontWeight.normal,
-          color:  ColorsManager.red,
+          color:  ColorsManager.error,
         ),
         focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -81,7 +81,7 @@ class BuildTextField extends StatelessWidget {
             borderSide: BorderSide(width: 0, color: ColorsManager.lightGray)),
         errorBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(5)),
-            borderSide: BorderSide(width: 1, color:  ColorsManager.red)),
+            borderSide: BorderSide(width: 1, color:  ColorsManager.error)),
         focusedErrorBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             borderSide: BorderSide(width: 1, color: ColorsManager.lightGray)),

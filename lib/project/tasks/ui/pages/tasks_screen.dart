@@ -19,7 +19,6 @@ import '../../../../routes/pages.dart';
 import '../../../../utils/font_sizes.dart';
 import '../../bloc/tasks_bloc.dart';
 import '../../data/local/model/task_model.dart';
-import '../widget/InfoCard.dart';
 import '../widget/task_item_view.dart';
 
 class TasksScreen extends StatefulWidget {
@@ -42,8 +41,7 @@ class _TasksScreenState extends State<TasksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    UserModel arguments ;
-    arguments =ModalRoute.of(context)!.settings.arguments  as UserModel;
+
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
@@ -53,8 +51,8 @@ class _TasksScreenState extends State<TasksScreen> {
             child: Scaffold(
           backgroundColor:  ColorsManager.white,
           appBar: CustomAppBar(
-            title: '${arguments.firstName} ${arguments.lastName}',
-            image: arguments.avatar,
+            title: '${TasksBloc.userModel.firstName} ${TasksBloc.userModel.lastName}',
+            image: TasksBloc.userModel.avatar,
             showBackArrow: false,
             actionWidgets: [
               PopupMenuButton<int>(
@@ -160,7 +158,7 @@ class _TasksScreenState extends State<TasksScreen> {
 
                         print('listener state  >>  ${state}');
                     if (state is LoadTaskFailure) {
-                      ScaffoldMessenger.of(context).showSnackBar(getSnackBar(state.error,  ColorsManager.red));
+                      ScaffoldMessenger.of(context).showSnackBar(getSnackBar(state.error,  ColorsManager.error));
                     }
 
                     if (state is AddTaskFailure || state is UpdateTaskFailure) {

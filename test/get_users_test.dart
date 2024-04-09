@@ -44,15 +44,15 @@ Future<void> main() async {
       dioAdapter.onGet('users?page=1', (request) => request.reply(200, mockData));
 
       // Initialize ApiService and UserRepository with Dio instance
-      final apiService = ApiService(dio);
+      final apiService = RemoteDataSource(dio);
       final userRepository = UserRepository(null,apiService);
 
       // Perform getUsers operation
-      final userResponse = await userRepository.getUsers(1);
+      final userResponse = await userRepository.getUsers();
 
       // Assertions
       expect(userResponse?.totalPages, 2);
-      expect(userResponse?.data.length, 3);
+      expect(userResponse?.data?.length, 3);
     },
   );
 }

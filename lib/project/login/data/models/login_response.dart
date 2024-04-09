@@ -4,8 +4,22 @@ part 'login_response.g.dart';
 class LoginResponse {
   @JsonKey(name: 'token')
   String? token;
-
-  LoginResponse({this.token});
+  int? id;
+  String? username;
+  String? email;
+  String? firstName;
+  String? lastName;
+  String? gender;
+  String? image;
+  LoginResponse(
+      {this.id,
+        this.username,
+        this.email,
+        this.firstName,
+        this.lastName,
+        this.gender,
+        this.image,
+        this.token});
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
       _$LoginResponseFromJson(json);
