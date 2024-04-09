@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_manager/project/users/data/models/user_model.dart';
 
+import '../../../main.dart';
 import '../data/local/model/task_model.dart';
 import '../data/repository/task_repository.dart';
 
@@ -42,9 +43,9 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       await taskRepository.createNewTask(event.taskModel);
       emit(AddTasksSuccess());
       final tasks = await taskRepository.getTasks(userModel);
+
       return emit(FetchTasksSuccess(tasks: tasks));
     } catch (exception) {
-      print("ddddddddddddexception.toString()");
       print(exception.toString());
       emit(AddTaskFailure(error: exception.toString()));
     }

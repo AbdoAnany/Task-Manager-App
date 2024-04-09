@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:task_manager/components/widgets.dart';
 import 'package:task_manager/utils/color_palette.dart';
 import 'package:task_manager/utils/font_sizes.dart';
@@ -65,7 +66,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               padding:  EdgeInsets.all(20.0.h),
               child: CircularProgressIndicator(),
             ), // Placeholder widget while loading
-            errorWidget: (context, url, error) => Icon(Icons.error), // Widget to display if image fails to load
+            errorWidget: (context, url, error) => SizedBox(), // Widget to display if image fails to load
             fit: BoxFit.cover, // Adjust how the image fits within the container
           ),
           SizedBox(width: 12.w,),

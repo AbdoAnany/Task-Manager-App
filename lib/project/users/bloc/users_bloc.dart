@@ -28,10 +28,8 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     emit(UsersLoading());
     try {
       final user = await usersRepository.getUsers(event.page);
-      print('................    user.total');
-      print(user.total);
       usersList.clear();
-      usersList.addAll(user.data!.map((e) => UserModel(id: e.id!, email: e.email!, firstName: e.firstName!, lastName: e.lastName!, avatar: e.avatar!)).toList());
+      usersList.addAll(user!.data!.map((e) => UserModel(id: e.id!, email: e.email!, firstName: e.firstName!, lastName: e.lastName!, avatar: e.avatar!)).toList());
       return emit(FetchUsersSuccess(
           users: usersList,
 

@@ -3,11 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:task_manager/components/widgets.dart';
+import 'package:task_manager/core/helpers/extensions.dart';
 import 'package:task_manager/project/tasks/data/local/model/task_model.dart';
 import 'package:task_manager/utils/font_sizes.dart';
 
 import '../../../../components/custom_app_bar.dart';
 import '../../../../core/theming/colors.dart';
+import '../../../../routes/pages.dart';
 import '../../../../utils/color_palette.dart';
 import '../../../../utils/util.dart';
 import '../../../../components/build_text_field.dart';
@@ -82,7 +84,8 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                             getSnackBar(state.error,  ColorsManager.red));
                       }
                       if (state is UpdateTaskSuccess) {
-                        Navigator.pop(context);
+                        context.pushReplacementNamed(Pages.tasksScreen ,  arguments: TasksBloc.userModel);
+
                       }
                     }, builder: (context, state) {
                       return ListView(

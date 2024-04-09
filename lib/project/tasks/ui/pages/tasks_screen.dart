@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:task_manager/components/custom_app_bar.dart';
 import 'package:task_manager/components/build_text_field.dart';
+import 'package:task_manager/core/helpers/extensions.dart';
 import 'package:task_manager/project/users/data/models/user_model.dart';
 import 'package:task_manager/utils/color_palette.dart';
 import 'package:task_manager/utils/util.dart';
@@ -16,6 +19,7 @@ import '../../../../routes/pages.dart';
 import '../../../../utils/font_sizes.dart';
 import '../../bloc/tasks_bloc.dart';
 import '../../data/local/model/task_model.dart';
+import '../widget/InfoCard.dart';
 import '../widget/task_item_view.dart';
 
 class TasksScreen extends StatefulWidget {
@@ -41,7 +45,6 @@ class _TasksScreenState extends State<TasksScreen> {
     UserModel arguments ;
     arguments =ModalRoute.of(context)!.settings.arguments  as UserModel;
 
-    var size = MediaQuery.of(context).size;
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -62,20 +65,15 @@ class _TasksScreenState extends State<TasksScreen> {
                 onSelected: (value) {
                   switch (value) {
                     case 0:
-                      {
-                        context.read<TasksBloc>().add(SortTaskEvent(sortOption: 0));
+                      context.read<TasksBloc>().add(SortTaskEvent(sortOption: 0));
                         break;
-                      }
                     case 1:
-                      {
                         context.read<TasksBloc>().add(SortTaskEvent(sortOption: 1));
                         break;
-                      }
                     case 2:
-                      {
                         context.read<TasksBloc>().add(SortTaskEvent(sortOption: 2));
                         break;
-                      }
+
                   }
                 },
                 itemBuilder: (BuildContext context) {
@@ -159,15 +157,21 @@ class _TasksScreenState extends State<TasksScreen> {
                   padding: const EdgeInsets.all(12),
                   child: BlocConsumer<TasksBloc, TasksState>(
                       listener: (context, state) {
+
+                        print('listener state  >>  ${state}');
                     if (state is LoadTaskFailure) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(getSnackBar(state.error,  ColorsManager.red));
+                      ScaffoldMessenger.of(context).showSnackBar(getSnackBar(state.error,  ColorsManager.red));
                     }
 
                     if (state is AddTaskFailure || state is UpdateTaskFailure) {
                       context.read<TasksBloc>().add(FetchTaskEvent());
                     }
+                    // if (state is AddTasksSuccess || state is UpdateTaskSuccess) {
+                    //   context.read<TasksBloc>().add(FetchTaskEvent());
+                    // }
                   }, builder: (context, state) {
+                    print('builder state  >>  ${state}');
+
                     if (state is TasksLoading) {
                       return const Center(
                         child: CupertinoActivityIndicator(),
@@ -207,64 +211,196 @@ class _TasksScreenState extends State<TasksScreen> {
                                 const SizedBox(
                                   height: 20,
                                 ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child:  Container(
+
+                                        padding: EdgeInsets.all(18.sp),
+                                        width: 224.w,
+                                        height: 120.h,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(12),
+                                            border: Border.all(
+                                              color: ColorsManager.primaryColor,
+                                            )),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      padding: EdgeInsets.all(8.sp),
+
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.white,
+                                                          borderRadius: BorderRadius.circular(12),
+                                                          border: Border.all(
+                                                            color: Colors.grey,
+                                                          )),
+                                                      child: Icon(
+                                                        Iconsax.broom,
+                                                        color: ColorsManager.primaryColor,
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 12.w,),
+                                                    Text("Activity" ,  style: TextStyle(
+                                                      fontSize: 20.w,
+                                                      fontWeight: FontWeight.w400,
+                                                    ),),
+                                                  ],
+                                                ),
+
+                                              ],
+                                            ),
+                                            SizedBox(height:12.h ,),
+
+
+                                            Text(
+                                              "${state.tasks.where((element) => !element.completed).length}",
+                                              style: TextStyle(
+                                                fontSize: 24.w,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),SizedBox(width: 8.w,),
+                                                    Expanded(
+                                      child:    Container(
+
+                                        padding: EdgeInsets.all(18.sp),
+                              //          width: 224.w,
+                                        height: 120.h,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(12),
+                                            border: Border.all(
+                                              color: ColorsManager.primaryColor,
+                                            )),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      padding: EdgeInsets.all(8.sp),
+
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.white,
+                                                          borderRadius: BorderRadius.circular(12),
+                                                          border: Border.all(
+                                                            color: Colors.grey,
+                                                          )),
+                                                      child: Icon(
+                                                        Iconsax.task,
+                                                        color: ColorsManager.primaryColor,
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 8.w,),
+                                                    Text("Done" ,  style: TextStyle(
+                                                      fontSize: 20.w,
+                                                      fontWeight: FontWeight.w400,
+                                                    ),),
+                                                  ],
+                                                ),
+
+                                              ],
+                                            ),
+                                            SizedBox(height:12.h ,),
+
+
+                                            Text(
+                                              "${state.tasks.where((element) => element.completed).length}",
+                                              style: TextStyle(
+                                                fontSize: 24.w,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ),
+                                  ],
+                                ),SizedBox(height:  20.h,),
                                 Expanded(
                                     child: ListView.separated(
-                                  shrinkWrap: true,
+
                                   itemCount: state.tasks.length,
                                   itemBuilder: (context, index) {
-                                    return TaskItemView(
-                                        taskModel: state.tasks[index]);
+                                    return TaskItemView(taskModel: state.tasks[index]);
                                   },
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    return const Divider(
-                                      color:  ColorsManager.lightGray,
-                                    );
+                                  separatorBuilder: (BuildContext context, int index) {
+                                    return const Divider(color:  ColorsManager.lightGray,);
                                   },
                                 ))
                               ],
                             )
-                          : Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/svgs/tasks.svg',
-                                    height: size.height * .20,
-                                    width: size.width,
-                                  ),
-                                  const SizedBox(
-                                    height: 50,
-                                  ),
-                                  buildText(
-                                      'Schedule your tasks',
-                                       ColorsManager.black,
-                                      textBold,
-                                      FontWeight.w600,
-                                      TextAlign.center,
-                                      TextOverflow.clip),
-                                  buildText(
-                                      'Manage your task schedule easily\nand efficiently',
-                                       ColorsManager.black.withOpacity(.5),
-                                      textSmall,
-                                      FontWeight.normal,
-                                      TextAlign.center,
-                                      TextOverflow.clip),
-                                ],
-                              ),
-                            );
+                          : NoTaskFound();
                     }
                     return Container();
                   }))),
           floatingActionButton: FloatingActionButton(
+            backgroundColor: ColorsManager.primaryColor,
               child: const Icon(
-                Icons.add_circle,
-                color:  ColorsManager.primaryColor,
+                Icons.add,
+                color:  ColorsManager.white,
               ),
               onPressed: () {
-                Navigator.pushNamed(context, Pages.createNewTask);
+                context.pushNamed(Pages.createNewTask);
               }),
         )));
   }
 }
+class NoTaskFound extends StatelessWidget {
+  const NoTaskFound({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
+    return Center(
+    child: Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+    SvgPicture.asset(
+    'assets/svgs/tasks.svg',
+    height: size.height * .20,
+    width: size.width,
+    ),
+    const SizedBox(
+    height: 50,
+    ),
+    buildText(
+    'Schedule your tasks',
+    ColorsManager.black,
+    textBold,
+    FontWeight.w600,
+    TextAlign.center,
+    TextOverflow.clip),
+    buildText(
+    'Manage your task schedule easily\nand efficiently',
+    ColorsManager.black.withOpacity(.5),
+    textSmall,
+    FontWeight.normal,
+TextAlign.center,
+TextOverflow.clip),
+],
+),
+);
+  }
+}
+

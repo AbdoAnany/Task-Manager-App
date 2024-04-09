@@ -17,10 +17,7 @@ class TaskDataProvider {
   Future<List<TaskModel>> getTasks(UserModel userModel) async {
     try {
 
-      print('userModel.id userModel.id userModel.iduserModel.id');
-      print(userModel.id);
-      print(userModel.firstName);
-      print(Constants.taskKey+ userModel.id.toString());
+
       final List<String>? savedTasks = prefs!.getStringList(Constants.taskKey+ userModel.id.toString());
       print(savedTasks);
       if (savedTasks != null) {
@@ -90,8 +87,7 @@ class TaskDataProvider {
 
 
       tasks.add(taskModel);
-      final List<String> taskJsonList =
-          tasks.map((task) => json.encode(task.toJson())).toList();
+      final List<String> taskJsonList = tasks.map((task) => json.encode(task.toJson())).toList();
       await prefs!.setStringList(Constants.taskKey+  TasksBloc.userModel.id.toString(), taskJsonList);
     } catch (exception) {
       throw Exception(handleException(exception));

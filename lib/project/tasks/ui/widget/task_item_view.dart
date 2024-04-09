@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:task_manager/core/helpers/extensions.dart';
 
 import '../../../../components/widgets.dart';
 import '../../../../core/theming/colors.dart';
@@ -67,7 +68,9 @@ class _TaskItemViewState extends State<TaskItemView> {
                           switch (value) {
                             case 0:
                               {
-                                Navigator.pushNamed(context, Pages.updateTask, arguments: widget.taskModel);
+                                context.pushNamed(
+                                    Pages.updateTask,
+                                    arguments: widget.taskModel);
                                 break;
                               }
                             case 1:
