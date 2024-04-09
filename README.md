@@ -7,7 +7,7 @@ This Flutter app serves as a task manager, empowering users to efficiently organ
 
 This project is a starting point for a Flutter application. To get started:
 
-1. Clone this repository to your local machine.
+1. Clone this repository git clone https://github.com/AbdoAnany/Task-Manager-App.git .
 2. Ensure you have Flutter installed. If not, follow the installation instructions here.
 3. Open the project directory in your preferred IDE or text editor.
 4. Run flutter pub get to install dependencies.
@@ -16,8 +16,13 @@ This project is a starting point for a Flutter application. To get started:
 
    
 ## Design Decisions
-* Explain key design choices, such as the selection of state management pattern and local storage method.
-* Justify the use of specific libraries or packages for certain functionalities.
+
+Design Decisions
+* flutter_screenutil: Utilizing the flutter_screenutil package for responsive UI design was a deliberate choice. By using flutter_screenutil, the application can dynamically adjust its layout based on the screen size and resolution of the device. This ensures a consistent and visually appealing user experience across various devices, including smartphones and tablets.
+
+* iconsax: The decision to use the iconsax icon library was made to enhance the visual aesthetics of the application. iconsax offers a wide range of modern and stylish icons that can be seamlessly integrated into the user interface. Leveraging this icon library helps in creating a visually appealing and cohesive design language throughout the application.
+
+* table_calendar: Integrating the table_calendar package provides a robust solution for implementing a calendar view within the application. The table_calendar package offers customizable calendar widgets with features such as event highlighting, date selection, and month switching. By incorporating table_calendar, the application can effectively display and manage tasks or events in a calendar format, improving user productivity and organization.
 
 ## Challenges Faced
 * Describe any hurdles encountered during the development process and how they were addressed.
