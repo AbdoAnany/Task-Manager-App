@@ -24,25 +24,23 @@ Design Decisions
 
 * table_calendar: Integrating the table_calendar package provides a robust solution for implementing a calendar view within the application. The table_calendar package offers customizable calendar widgets with features such as event highlighting, date selection, and month switching. By incorporating table_calendar, the application can effectively display and manage tasks or events in a calendar format, improving user productivity and organization.
 
-## Challenges Faced
-* Describe any hurdles encountered during the development process and how they were addressed.
-* Highlight any particularly tricky aspects of implementation.
+
 
 ## Additional Features Implemented
 * Use flutter_screenutil to get responsive Design
 * Iconsax for flutter (1000+ icons 6 diferent styles, total 6000+ icons).
-* flutter_native_splash When your app is opened, there is a brief time while the native app loads 
-* Flutter. By default, during this time, the native app displays a
+* flutter_native_splash When your app is opened, there is a brief time while the native app loads Flutter. By default, during this time, the native app displays a
 
 
 ## Additional Resources
+
 * Flutter Documentation: Offers tutorials, samples, guidance on mobile development, and a full API reference.
 * Flutter Cookbook: Provides useful Flutter samples for various tasks and scenarios.
 * Flutter Codelab: Step-by-step guide to writing your first Flutter app.
 * Feel free to explore these resources to enhance your understanding of Flutter development.
   
 ## Splash Screen
-<img src="screen/Screenshot_1.png"  height="1000em">
+<img src="screen/Screenshot_1.png"  height="1000em"> ![app_logo](https://github.com/AbdoAnany/Task-Manager-App/assets/60886012/7b459c59-80de-472b-a40d-198e1e87d45d)
 
 ## Login Screen
 User Authentication: Secure user login via email and password using the /api/login endpoint from reqres.in.
