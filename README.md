@@ -48,7 +48,7 @@ User Authentication: Secure user login via email and password using the /api/log
 example email: eve.holt@reqres.in 
 password: Aa@12345
 
-<img src="screen/Screenshot_1.png"  height="800em">   <img src="screen/Screenshot_2.png"  height="800em">    <img src="screen/Screenshot_3.png"  height="800em">
+<img src="screen/Screenshot_1.png"  height="700em">   <img src="screen/Screenshot_2.png"  height="700em">    <img src="screen/Screenshot_3.png"  height="700em">
 
 
 
