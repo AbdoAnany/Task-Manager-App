@@ -42,25 +42,25 @@ User Authentication: Secure user login via email and password using the /api/log
 example email: eve.holt@reqres.in 
 password: Aa@12345
 
-<img src="screen/Screenshot_2.png"  height="1000em">
-<img src="screen/Screenshot_3.png"  height="1000em">
+<img src="screen/Screenshot_2.png"  height="1000em">    <img src="screen/Screenshot_3.png"  height="1000em">
+
 
 
 ## Users Screen 
  Full CRUD functionality (Create, Read, Update, Delete) for tasks. Utilizes reqres.in endpoints such as /api/users for managing task data.
  Efficient pagination for handling a large number of tasks, leveraging the /api/users?page={page_number} endpoint.
  
-<img src="screen/Screenshot_4.png"  height="1000em">
-<img src="screen/Screenshot_5.png"  height="1000em">
+<img src="screen/Screenshot_4.png"  height="1000em">  <img src="screen/Screenshot_5.png"  height="1000em">
+
 
 ## User Task Screen
 Tasks are persisted locally using Flutter's shared preferences to ensure accessibility even when the app is closed and reopened.
 
-<img src="screen/Screenshot_6.png"  height="700em"><img src="screen/Screenshot_8.png"  height="700em"><img src="screen/Screenshot_10.png"  height="700em">
+<img src="screen/Screenshot_6.png"  height="1000em">   <img src="screen/Screenshot_8.png"  height="1000em">  <img src="screen/Screenshot_10.png"  height="1000em">
 
 
 
 ## Add and Update Task Screen
 
-<img src="screen/Screenshot_7.png"  height="1000em">
-<img src="screen/Screenshot_11.png"  height="1000em">
+<img src="screen/Screenshot_7.png"  height="1000em">  <img src="screen/Screenshot_11.png"  height="1000em">
+
