@@ -40,7 +40,7 @@ Design Decisions
 * Feel free to explore these resources to enhance your understanding of Flutter development.
   
 ## Splash Screen
-<img src="screen/Screenshot_1.png"  height="1000em">   <img src="[screen/Screenshot_1.png](https://github.com/AbdoAnany/Task-Manager-App/assets/60886012/7b459c59-80de-472b-a40d-198e1e87d45d)"  height="500em"> 
+<img src="screen/Screenshot_1.png"  height="1000em">   <img src="https://github.com/AbdoAnany/Task-Manager-App/assets/60886012/7b459c59-80de-472b-a40d-198e1e87d45d"  height="500em"> 
 
 ## Login Screen
 User Authentication: Secure user login via email and password using the /api/login endpoint from reqres.in.
