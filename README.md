@@ -27,17 +27,18 @@ Design Decisions
 
 
 ## Additional Features Implemented
-* Use flutter_screenutil to get responsive Design
-* Iconsax for flutter (1000+ icons 6 diferent styles, total 6000+ icons).
-* flutter_native_splash When your app is opened, there is a brief time while the native app loads Flutter. By default, during this time, the native app displays a
+It seems like you're listing additional features or packages implemented in a Flutter project. Here's a brief overview of each one:
 
+1. **cached_network_image**: A Flutter package to load and cache network images efficiently.
+2. **table_calendar**: A Flutter package to create customizable calendar widgets.
+3. **flutter_svg**: A Flutter package to render SVG (Scalable Vector Graphics) images.
+4. **freezed_annotation**: A Dart package used for code generation, primarily for immutable data models.
+5. **get_it**: A service locator package for Dart and Flutter projects, facilitating dependency injection.
+6. **json_serializable**: A Dart package for generating code to serialize/deserialize JSON data.
+7. **easy_localization**: A Flutter package for easy internationalization (i18n) and localization of app content.
+8. **mockito**: A Dart package for creating mock objects for testing.
 
-## Additional Resources
-
-* Flutter Documentation: Offers tutorials, samples, guidance on mobile development, and a full API reference.
-* Flutter Cookbook: Provides useful Flutter samples for various tasks and scenarios.
-* Flutter Codelab: Step-by-step guide to writing your first Flutter app.
-* Feel free to explore these resources to enhance your understanding of Flutter development.
+These packages provide various functionalities, ranging from UI enhancements to state management, internationalization, and testing support in Flutter applications. They enhance development speed and maintainability by providing ready-to-use solutions for common tasks.
   
 ## Logo
  <img src="https://github.com/AbdoAnany/Task-Manager-App/assets/60886012/7b459c59-80de-472b-a40d-198e1e87d45d"  height="200em"> 
