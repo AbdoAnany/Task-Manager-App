@@ -29,7 +29,10 @@ Design Decisions
 * Highlight any particularly tricky aspects of implementation.
 
 ## Additional Features Implemented
-* List any extra features beyond the specified requirements that were added to enhance the app's functionality or user experience.
+* Use flutter_screenutil to get responsive Design
+* Iconsax for flutter (1000+ icons 6 diferent styles, total 6000+ icons).
+* flutter_native_splash When your app is opened, there is a brief time while the native app loads 
+* Flutter. By default, during this time, the native app displays a
 
 
 ## Additional Resources
