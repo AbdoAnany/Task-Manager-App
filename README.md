@@ -27,7 +27,6 @@ Design Decisions
 
 
 ## Additional Features Implemented
-It seems like you're listing additional features or packages implemented in a Flutter project. Here's a brief overview of each one:
 
 1. **cached_network_image**: A Flutter package to load and cache network images efficiently.
 2. **table_calendar**: A Flutter package to create customizable calendar widgets.
@@ -38,7 +37,6 @@ It seems like you're listing additional features or packages implemented in a Fl
 7. **easy_localization**: A Flutter package for easy internationalization (i18n) and localization of app content.
 8. **mockito**: A Dart package for creating mock objects for testing.
 
-These packages provide various functionalities, ranging from UI enhancements to state management, internationalization, and testing support in Flutter applications. They enhance development speed and maintainability by providing ready-to-use solutions for common tasks.
   
 ## Logo
  <img src="https://github.com/AbdoAnany/Task-Manager-App/assets/60886012/7b459c59-80de-472b-a40d-198e1e87d45d"  height="200em"> 
