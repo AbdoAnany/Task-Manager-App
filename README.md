@@ -39,16 +39,16 @@ Design Decisions
 * Flutter Codelab: Step-by-step guide to writing your first Flutter app.
 * Feel free to explore these resources to enhance your understanding of Flutter development.
   
-## Splash Screen
-<img src="screen/Screenshot_1.png"  height="1000em">   <img src="https://github.com/AbdoAnany/Task-Manager-App/assets/60886012/7b459c59-80de-472b-a40d-198e1e87d45d"  height="500em"> 
+## Logo
+ <img src="https://github.com/AbdoAnany/Task-Manager-App/assets/60886012/7b459c59-80de-472b-a40d-198e1e87d45d"  height="100em"> 
 
-## Login Screen
+## Splash Screen && Login Screen
 User Authentication: Secure user login via email and password using the /api/login endpoint from reqres.in.
 
 example email: eve.holt@reqres.in 
 password: Aa@12345
 
-<img src="screen/Screenshot_2.png"  height="1000em">    <img src="screen/Screenshot_3.png"  height="1000em">
+<img src="screen/Screenshot_1.png"  height="1000em">   <img src="screen/Screenshot_2.png"  height="1000em">    <img src="screen/Screenshot_3.png"  height="1000em">
 
 
 
