@@ -6,6 +6,7 @@ import 'package:task_manager/utils/exception_handler.dart';
 
 import '../../../../../core/di/dependency_injection.dart';
 import '../../../../../utils/constants.dart';
+import '../../../../users/bloc/users_bloc.dart';
 import '../../../bloc/tasks_bloc.dart';
 
 class TaskDataProvider {
@@ -107,13 +108,13 @@ class TaskDataProvider {
 
   Future<void> createTask(TaskModel taskModel) async {
     print("getIt<TasksBloc>().userModel.id.toString()");
-    print(TasksBloc.userModel.id.toString());
+    print(UsersBloc.userModel!.id.toString());
     try {
 
 
       tasks.add(taskModel);
       final List<String> taskJsonList = tasks.map((task) => json.encode(task.toJson())).toList();
-      await prefs!.setStringList(Constants.taskKey+  TasksBloc.userModel.id.toString(), taskJsonList);
+      await prefs!.setStringList(Constants.taskKey+  UsersBloc.userModel!.id.toString(), taskJsonList);
     } catch (exception) {
       throw Exception(handleException(exception));
     }
@@ -134,7 +135,7 @@ class TaskDataProvider {
       });
       final List<String> taskJsonList = tasks.map((task) =>
           json.encode(task.toJson())).toList();
-      prefs!.setStringList(Constants.taskKey+  TasksBloc.userModel.id.toString(), taskJsonList);
+      prefs!.setStringList(Constants.taskKey+  UsersBloc.userModel!.id.toString(), taskJsonList);
       return tasks;
     } catch (exception) {
       throw Exception(handleException(exception));
@@ -146,7 +147,7 @@ class TaskDataProvider {
       tasks.remove(taskModel);
       final List<String> taskJsonList = tasks.map((task) =>
           json.encode(task.toJson())).toList();
-      prefs!.setStringList(Constants.taskKey+ TasksBloc.userModel.id.toString(), taskJsonList);
+      prefs!.setStringList(Constants.taskKey+ UsersBloc.userModel!.id.toString(), taskJsonList);
       return tasks;
     } catch (exception) {
       throw Exception(handleException(exception));
@@ -164,7 +165,7 @@ class TaskDataProvider {
   }
 
   Future<UserModel>  selectUser(UserModel userModel) async {
-    TasksBloc.userModel = userModel;
+    UsersBloc.userModel = userModel;
 
  await   prefs!.setString(userModel.id.toString(), json.encode(userModel.toJson()));
     return userModel;

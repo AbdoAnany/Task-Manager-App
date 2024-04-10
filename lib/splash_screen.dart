@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_manager/project/users/bloc/users_bloc.dart';
+import 'package:task_manager/project/users/data/models/user_model.dart';
 import 'components/widgets.dart';
 import 'core/di/dependency_injection.dart';
 import 'core/theming/colors.dart';
@@ -24,10 +26,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   startTimer() async {
    bool? isLogin =getIt<SharedPreferences>().getBool('isLogin')??false;
-    Future.delayed(const Duration(milliseconds: 3000), () {
+    Future.delayed(const Duration(milliseconds: 3000), () async {
+
+ UsersBloc.userModel=  (await   UserModel.getUser(0));
       Navigator.pushNamedAndRemoveUntil(
         context,
-        isLogin?  Pages.todosScreen:  Pages.loginScreen,
+        UsersBloc.userModel!=null?  Pages.todosScreen:  Pages.loginScreen,
             (route) => false,
       );
     });

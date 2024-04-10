@@ -6,12 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:task_manager/core/di/dependency_injection.dart';
 import 'package:task_manager/core/helpers/extensions.dart';
 import 'package:task_manager/project/login/logic/cubit/login_cubit.dart';
 import 'package:task_manager/project/todos/data/models/todos_response.dart';
-
+import 'package:flutter_animate/flutter_animate.dart';
 import '../../../../components/build_text_field.dart';
+import '../../../../components/custom_app_bar.dart';
 import '../../../../components/widgets.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/styles.dart';
@@ -19,7 +21,9 @@ import '../../../../routes/pages.dart';
 import '../../../../utils/font_sizes.dart';
 import '../../../../utils/util.dart';
 import '../../../tasks/bloc/tasks_bloc.dart';
+import '../../../users/bloc/users_bloc.dart';
 import '../../bloc/todos_bloc.dart';
+import '../../data/data_sources/todos_provider.dart';
 import '../widget/TaskManagementPopupMenu.dart';
 
 class TodosScreen extends StatefulWidget {
@@ -64,43 +68,63 @@ class _TodosScreenState extends State<TodosScreen> {
                         height: 50.h,
                         child: Row(
                           children: [
-                            Expanded(
-                              child: BuildTextField(
-                                  hint: "Search recent users",
-                                  //   controller: searchController,
-                                  inputType: TextInputType.text,
-                                  prefixIcon: const Icon(
-                                    Icons.search,
-                                    color: ColorsManager.lightGray,
-                                  ),
-                                  fillColor: ColorsManager.white,
-                                  onChange: (value) {
-                                    if (value.length == 0) {
-                                      context.read<TodosBloc>().add(
-                                          SearchTodosEvent(
-                                              keywords: value,
-                                              todoData: context
-                                                  .read<TodosBloc>()
-                                                  .todosList));
-                                    } else {
-                                      context.read<TodosBloc>().add(
-                                          SearchTodosEvent(
-                                              keywords: value,
-                                              todoData: context
-                                                  .read<TodosBloc>()
-                                                  .todosList));
-                                    }
-                                  }),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                getIt<LoginCubit>().logOut();
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(Iconsax.logout),
+                            // Expanded(
+                            //   child: BuildTextField(
+                            //       hint: "Search recent users",
+                            //       //   controller: searchController,
+                            //       inputType: TextInputType.text,
+                            //       prefixIcon: const Icon(
+                            //         Icons.search,
+                            //         color: ColorsManager.lightGray,
+                            //       ),
+                            //       fillColor: ColorsManager.white,
+                            //       onChange: (value) {
+                            //         if (value.length == 0) {
+                            //           context.read<TodosBloc>().add(
+                            //               SearchTodosEvent(
+                            //                   keywords: value,
+                            //                   todoData: context
+                            //                       .read<TodosBloc>()
+                            //                       .todosList));
+                            //         } else {
+                            //           context.read<TodosBloc>().add(
+                            //               SearchTodosEvent(
+                            //                   keywords: value,
+                            //                   todoData: context
+                            //                       .read<TodosBloc>()
+                            //                       .todosList));
+                            //         }
+                            //       }),
+                            // ),
+                   Expanded(
+                     child: CustomAppBar(
+                                title: '${UsersBloc.userModel!.firstName} ${UsersBloc.userModel!.lastName}',
+                                image: UsersBloc.userModel!.avatar,
+                                showBackArrow: false,
+                                actionWidgets: [
+                                  InkWell(
+                                    onTap: () {
+                                      context.pushNamed(Pages.userScreen);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(Iconsax.user),
+                                    ),
+                                  ) ,  InkWell(
+                                    onTap: () {
+                                      getIt<LoginCubit>().logOut();
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(Iconsax.logout),
+                                    ),
+                                  )
+                                ],
                               ),
-                            )
+                   ),
+
+
+
                           ],
                         ),
                       ),
@@ -253,65 +277,95 @@ class _TodosScreenState extends State<TodosScreen> {
                         itemBuilder: (context, index) {
                           TodoData? user = state.todos?[index];
 
-                          return InkWell(
-                            onTap: () {
-                              // TasksBloc.userModel=user;
-                              // context
-                              //     .read<TasksBloc>()
-                              //     .add(SelectTodoEvent(userModel: user!));
-                              print(TasksBloc.userModel.id);
-                              print(TasksBloc.userModel.firstName);
-                              context.pushNamed(Pages.tasksScreen,
-                                  arguments: user);
-                            },
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "${user?.todo}", //overflow: TextOverflow.ellipsis,
+                          return Animate(
+                            effects: [
+                         //     FadeEffect(duration: Duration(milliseconds: index+300)),
+                          //  ScaleEffect(duration: Duration(milliseconds: index+300))
+                            ],
+                            child:InkWell(
+                              onTap: () {
+                                // UsersBloc.userModel=user;
+                                // context
+                                //     .read<TasksBloc>()
+                                //     .add(SelectTodoEvent(userModel: user!));
+                                print(UsersBloc.userModel!.id);
+                                print(UsersBloc.userModel!.firstName);
+                                context.pushNamed(Pages.tasksScreen,
+                                    arguments: user);
+                              },
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "${user?.id}-  "+"${user?.todo}", //overflow: TextOverflow.ellipsis,
 
-                                      style: TextStyles.font16GraySemiBold
-                                          .copyWith(
-                                              decoration: user!.completed
-                                                  ? TextDecoration.lineThrough
-                                                  : null),
+                                        style: TextStyles.font16GraySemiBold
+                                            .copyWith(
+                                                decoration: user!.completed
+                                                    ? TextDecoration.lineThrough
+                                                    : null),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(12.0.w),
-                                  child: user!.completed
-                                      ? Icon(
-                                          Icons.done,
-                                          color: ColorsManager.done,
-                                        )
-                                      : Icon(
-                                          Icons.access_time,
-                                          color: ColorsManager.wait,
-                                        ),
-                                ),
-                                TaskManagementPopupMenu(
-                                  onSelected: (ChangeTodosType a) {
-                                    switch (a) {
-                                      case ChangeTodosType.add:
-                                      // context
-                                      //     .read<TodosBloc>()
-                                      //     .add(AddTodosEvent(todoData: TodoData()  ));
-                                      case ChangeTodosType.update:
-                                        context.read<TodosBloc>().add(
-                                            UpdateTodosEvent(todoData: user));
-                                      case ChangeTodosType.delete:
-                                        context.read<TodosBloc>().add(
-                                            DeleteTodosEvent(todoData: user));
-                                    }
+                                  Padding(
+                                    padding: EdgeInsets.all(12.0.w),
+                                    child: user!.completed
+                                        ? Icon(
+                                            Icons.done,
+                                            color: ColorsManager.done,
+                                          )
+                                        : Icon(
+                                            Icons.access_time,
+                                            color: ColorsManager.wait,
+                                          ),
+                                  ),
+                                  TaskManagementPopupMenu(
+                                    completed:    user.completed,
+                                    onSelected: (ChangeTodosType a) async {
+                                      switch (a) {
+                                        case ChangeTodosType.add:
+                                        // context
+                                        //     .read<TodosBloc>()
+                                        //     .add(AddTodosEvent(todoData: TodoData()  ));
+                                        case ChangeTodosType.update:
+                                        state.todos?.firstWhere((element) =>  element.id==user.id).completed=
+                                            !user.completed
+                                        ;
+                                        final re=   await  getIt<TodosLocalDataSource>().getTodosFromPrefs();
+                                        state.todos?.firstWhere((element) =>  element.id==user.id).completed=
+                                        !user.completed
+                                        ;
+                                        user.completed=!user.completed;
+                                        await  getIt<TodosLocalDataSource>().saveTodosToPrefs(re);
+                                        setState(() {
 
-                                    // TODO: Handle this case.
-                                  },
-                                )
-                              ],
-                            ),
+                                        });
+                                          // context.read<TodosBloc>().add(
+                                          //     UpdateTodosEvent(todoData: user));
+                                        case ChangeTodosType.delete:
+                                          // context.read<TodosBloc>().add(
+                                          //     DeleteTodosEvent(todoData: user));
+                                          state.todos?.remove(user);
+                                          final re=   await  getIt<TodosLocalDataSource>().getTodosFromPrefs();
+                                          re.data?.removeWhere((element) => element.id==user.id);
+                                          await  getIt<TodosLocalDataSource>().saveTodosToPrefs(re);
+                                          setState(() {
+
+                                          });
+                                      }
+
+                                      // TODO: Handle this case.
+                                    },
+                                  )
+                                ],
+                              ),
+                            ).animate()
+                                .fadeIn(duration: 200.ms)
+                            //.then(delay: 200.ms) // baseline=800ms
+                              .slide()
+                          .flip(),
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {
@@ -320,44 +374,51 @@ class _TodosScreenState extends State<TodosScreen> {
                           );
                         },
                       )),
+
+                      if(!state.isSearching)
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(
-                              (state.total! ~/ state.limit!),
-                              (index) => Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 8.w, vertical: 12.h),
-                                    child: InkWell(
-                                      onTap: () {
-                                        print(state.limit! * index);
-                                        context
-                                            .read<TodosBloc>()
-                                            .add(FetchTodosEvent(
-                                              limit: 10,
-                                              skip: state.limit! * index,
-                                            ));
-                                      },
-                                      child: DecoratedBox(
-                                          decoration: BoxDecoration(
-                                              color: ColorsManager.primaryColor
-                                                  .withOpacity(.99),
-                                              borderRadius:
-                                                  BorderRadius.circular(12)),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 22.w,
-                                                vertical: 16.h),
-                                            child: Text(
-                                              (index ).toString(),
-                                              style: TextStyles
-                                                  .font16WhiteSemiBold,
-                                            ),
-                                          )),
-                                    ),
-                                  )),
+                          children:
+                          [...    List.generate(
+                              state.total! ~/ state.limit!.toInt(),
+                                  (index) =>Animate(
+                                effects: [FadeEffect(duration: Duration(milliseconds: index+100)), ScaleEffect(duration: Duration(milliseconds: index+300))],
+                                child:Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 8.w, vertical: 12.h),
+                                  child: InkWell(
+                                    onTap: () {
+                                      print(state.limit! * index);
+                                      context
+                                          .read<TodosBloc>()
+                                          .add(FetchTodosEvent(
+                                        limit: 10,
+                                        skip: state.limit! * index,
+                                      ));
+                                    },
+                                    child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                            color: ColorsManager.primaryColor
+                                                .withOpacity(.99),
+                                            borderRadius:
+                                            BorderRadius.circular(12)),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 22.w,
+                                              vertical: 16.h),
+                                          child: Text(
+                                            (index+1 ).toString(),
+                                            style: TextStyles
+                                                .font16WhiteSemiBold,
+                                          ),
+                                        )),
+                                  ),
+                                ),
+                              ))]
+                      ,
                         ),
                       )
                     ],

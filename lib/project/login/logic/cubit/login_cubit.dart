@@ -7,9 +7,11 @@ import 'package:task_manager/core/helpers/extensions.dart';
 import 'package:task_manager/project/login/data/models/login_request_body.dart';
 import 'package:task_manager/project/login/data/repos/login_repo.dart';
 import 'package:task_manager/project/login/logic/cubit/login_state.dart';
+import 'package:task_manager/project/users/data/models/user_model.dart';
 
 import '../../../../main.dart';
 import '../../../../routes/pages.dart';
+import '../../../users/bloc/users_bloc.dart';
 
 
 class LoginCubit extends Cubit<LoginState> {
@@ -31,6 +33,13 @@ class LoginCubit extends Cubit<LoginState> {
 
 
     response.when(success: (loginResponse) {
+      UsersBloc.userModel=UserModel(id: loginResponse.id!,
+        firstName:loginResponse.firstName!  ,lastName:loginResponse.lastName! ,
+        email: loginResponse.email! ,avatar: loginResponse.image!,
+        token: loginResponse.token
+      );
+      print( UsersBloc.userModel?.toJson());
+      UserModel.saveUser(  UsersBloc.userModel!);
       emit(LoginState.success(loginResponse));
     }, failure: (error) {
       emit(LoginState.error(

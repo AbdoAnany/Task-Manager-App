@@ -13,7 +13,8 @@ final class FetchTodosSuccess extends TodosState {
   final int? totalPages;
   final int? perPage;
 
-  FetchTodosSuccess( { this.page=1,  this.total=0, this.limit=0, this.skip=0,  this.totalPages=0,  this.perPage=0, this.todos=const [], this.isSearching = false});
+  FetchTodosSuccess( { this.page=1,  this.total=0, this.limit=0, this.skip=0,
+    this.totalPages=0,  this.perPage=0, this.todos=const [], this.isSearching = false});
 }
 
 final class AddTodosSuccess extends TodosState {}

@@ -29,6 +29,19 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
 
   void _fetchTodos(FetchTodosEvent event, Emitter<TodosState> emit) async {
     emit(TodosLoading());
+    final user = await todosRepository.getTodos(limit: event.limit,skip: event.skip);
+    todosList.clear();
+    todosList.addAll(user!.data!.map((e) => TodoData(id: e.id!, todo:e.todo!,
+        completed:  e.completed!, userId: e.userId!)).toList());
+    return emit(FetchTodosSuccess(
+      todos:todosList,
+      limit: user.limit,
+      skip:user.skip,
+      total:user.total,
+      //    totalPages:user.totalPages,
+
+      //  perPage:user.perPage,
+    ));
     try {
       final user = await todosRepository.getTodos(limit: event.limit,skip: event.skip);
       todosList.clear();
@@ -44,7 +57,7 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
       //  perPage:user.perPage,
       ));
     } catch (exception) {
-      print("s  ssdfasdfsf exception");
+      print("ssssfs  ssdfasdfsf exception");
       print(exception);
       emit(LoadTodosFailure(error: exception.toString()));
     }
@@ -87,7 +100,8 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
       final todos = await todosRepository.deleteTodo(event.todoData.id!);
       print(todos?.data?.length);
       print(todos?.toJson());
-      return emit(FetchTodosSuccess(todos: todos?.data,total: todos?.total,limit: todos?.limit));
+      return emit(FetchTodosSuccess(todos: todos?.data,
+          total: todos?.total,limit: todos?.limit,skip: todos?.skip));
     } catch (exception) {
       emit(LoadTodosFailure(error: exception.toString()));
     }
@@ -103,7 +117,7 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
 
     final todos =    todosList.where((element) =>
     element.todo!.toLowerCase() .contains(event.keywords )).toList();
-    return emit(FetchTodosSuccess( isSearching: true, todos: todos));
+    return emit(FetchTodosSuccess( isSearching:event. keywords.isNotEmpty, todos: todos));
   }
 
 

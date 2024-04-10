@@ -23,6 +23,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
  final List<UserModel> usersList=[];
 
+  static UserModel? userModel=UserModel(id: 0, email: '', firstName: 'dsdsad', lastName: '', avatar: '');
 
   void _fetchUsers(FetchUserEvent event, Emitter<UsersState> emit) async {
     emit(UsersLoading());
@@ -93,8 +94,8 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
 
     final users =    usersList.where((element) =>
-    element.firstName.toLowerCase() .contains(event.keywords )||
-        element.lastName.toLowerCase().contains(event.keywords)).toList() ;
+    element.firstName!.toLowerCase() .contains(event.keywords )||
+        element.lastName!.toLowerCase().contains(event.keywords)).toList() ;
     return emit(FetchUsersSuccess( isSearching: true, users: users));
   }
 }

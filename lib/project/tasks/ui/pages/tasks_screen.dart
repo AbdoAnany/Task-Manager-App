@@ -17,6 +17,7 @@ import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../routes/pages.dart';
 import '../../../../utils/font_sizes.dart';
+import '../../../users/bloc/users_bloc.dart';
 import '../../bloc/tasks_bloc.dart';
 import '../../data/local/model/task_model.dart';
 import '../widget/task_item_view.dart';
@@ -51,8 +52,8 @@ class _TasksScreenState extends State<TasksScreen> {
             child: Scaffold(
           backgroundColor:  ColorsManager.white,
           appBar: CustomAppBar(
-            title: '${TasksBloc.userModel.firstName} ${TasksBloc.userModel.lastName}',
-            image: TasksBloc.userModel.avatar,
+            title: '${UsersBloc.userModel!.firstName} ${UsersBloc.userModel!.lastName}',
+            image: UsersBloc.userModel!.avatar,
             showBackArrow: false,
             actionWidgets: [
               PopupMenuButton<int>(

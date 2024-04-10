@@ -67,6 +67,8 @@ dependencies:
   mockito: ^5.4.4
   bloc_test: ^9.1.7
   http_mock_adapter: ^0.6.1
+  animations: ^2.0.11
+  flutter_animate: ^4.5.0
   # An SVG rendering and widget library for Flutter, which allows painting
   # for adapting screen and font size.
 

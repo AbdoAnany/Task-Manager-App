@@ -11,6 +11,7 @@ import 'package:task_manager/core/helpers/extensions.dart';
 import 'package:task_manager/project/login/logic/cubit/login_cubit.dart';
 
 import '../../../../components/build_text_field.dart';
+import '../../../../components/custom_app_bar.dart';
 import '../../../../components/widgets.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/styles.dart';
@@ -38,6 +39,10 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leadingWidth: 0,
+        leading: null,toolbarHeight: 0,
+      ),
         body: Padding(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 20.h),
       child: SafeArea(
@@ -59,36 +64,55 @@ class _UserScreenState extends State<UserScreen> {
             return state.users!.isNotEmpty || state.isSearching??false
                 ? Column(
                     children: [
-                      SizedBox(height: 50.h,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: BuildTextField(
-                                  hint: "Search recent users",
-                                  //   controller: searchController,
-                                  inputType: TextInputType.text,
-                                  prefixIcon: const Icon(
-                                    Icons.search,
-                                    color: ColorsManager.lightGray,
-                                  ),
-                                  fillColor: ColorsManager.white,
-                                  onChange: (value) {
-                                    if (value.length == 0) {
-                                      context.read<UsersBloc>().add(SearchUserEvent(
-                                          keywords: value,
-                                          userModel:
-                                          context.read<UsersBloc>().usersList));
-                                    } else {
-                                      context.read<UsersBloc>().add(SearchUserEvent(
-                                          keywords: value,
-                                          userModel:
-                                          context.read<UsersBloc>().usersList));
-                                    }
-                                  }),
-                            ),
-                            InkWell(onTap: (){
-                              getIt<LoginCubit>().logOut();
-                            },
+                      // SizedBox(height: 50.h,
+                      //   child: Row(
+                      //     children: [
+                      //       Expanded(
+                      //         child: BuildTextField(
+                      //             hint: "Search recent users",
+                      //             //   controller: searchController,
+                      //             inputType: TextInputType.text,
+                      //             prefixIcon: const Icon(
+                      //               Icons.search,
+                      //               color: ColorsManager.lightGray,
+                      //             ),
+                      //             fillColor: ColorsManager.white,
+                      //             onChange: (value) {
+                      //               if (value.length == 0) {
+                      //                 context.read<UsersBloc>().add(SearchUserEvent(
+                      //                     keywords: value,
+                      //                     userModel:
+                      //                     context.read<UsersBloc>().usersList));
+                      //               } else {
+                      //                 context.read<UsersBloc>().add(SearchUserEvent(
+                      //                     keywords: value,
+                      //                     userModel:
+                      //                     context.read<UsersBloc>().usersList));
+                      //               }
+                      //             }),
+                      //       ),
+                      //       InkWell(onTap: (){
+                      //         getIt<LoginCubit>().logOut();
+                      //       },
+                      //         child: Padding(
+                      //           padding: const EdgeInsets.all(8.0),
+                      //           child: Icon(Iconsax.logout),
+                      //         ),
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
+
+                      SizedBox(height: 60.h,
+                        child: CustomAppBar(
+                          title: '${UsersBloc.userModel!.firstName} ${UsersBloc.userModel!.lastName}',
+                          image: UsersBloc.userModel!.avatar,
+                          showBackArrow: false,onBackTap:null ,
+                          actionWidgets: [
+                        InkWell(
+                              onTap: () {
+                                getIt<LoginCubit>().logOut();
+                              },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Icon(Iconsax.logout),
@@ -98,9 +122,6 @@ class _UserScreenState extends State<UserScreen> {
                         ),
                       ),
 
-                      SizedBox(
-                        height: 20.h,
-                      ),
                       Expanded(
                           child: ListView.separated(
                         itemCount: state.users!.length,
@@ -110,12 +131,12 @@ class _UserScreenState extends State<UserScreen> {
 
                           return InkWell(
                             onTap: () {
-                              // TasksBloc.userModel=user;
+                              // UsersBloc.userModel=user;
                               context
                                   .read<TasksBloc>()
                                   .add(SelectUserEvent(userModel: user!));
-                              print(TasksBloc.userModel.id);
-                              print(TasksBloc.userModel.firstName);
+                              print(UsersBloc.userModel!.id);
+                              print(UsersBloc.userModel!.firstName);
                               context.pushNamed(Pages.tasksScreen,
                                   arguments: user);
                             },
@@ -183,42 +204,44 @@ class _UserScreenState extends State<UserScreen> {
                           );
                         },
                       )),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                            (state.total! ~/ state.limit!),
-                            (index) => Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 8.w,
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      if (state.page != index + 1) {
-                                        context.read<UsersBloc>().add(
-                                            FetchUserEvent(
-                                              limit: 10,skip:(index + 1) ,
-                                               )
-                                        );
-                                      }
-                                    },
-                                    child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                            color: ColorsManager.primaryColor
-                                                .withOpacity(.99),
-                                            borderRadius:
-                                                BorderRadius.circular(50)),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.w, vertical: 16.h),
-                                          child: Text(
-                                            (index + 1).toString(),
-                                            style:
-                                                TextStyles.font16WhiteSemiBold,
-                                          ),
-                                        )),
-                                  ),
-                                )),
+                      SingleChildScrollView(scrollDirection: Axis.horizontal,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(
+                              (state.total! ~/ state.limit!),
+                              (index) => Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 8.w,
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        if (state.page != index + 1) {
+                                          context.read<UsersBloc>().add(
+                                              FetchUserEvent(
+                                                limit: 10,skip:(index + 1) ,
+                                                 )
+                                          );
+                                        }
+                                      },
+                                      child: DecoratedBox(
+                                          decoration: BoxDecoration(
+                                              color: ColorsManager.primaryColor
+                                                  .withOpacity(.99),
+                                              borderRadius:
+                                                  BorderRadius.circular(12)),
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 20.w, vertical: 16.h),
+                                            child: Text(
+                                              (index + 1).toString(),
+                                              style:
+                                                  TextStyles.font16WhiteSemiBold,
+                                            ),
+                                          )),
+                                    ),
+                                  )),
+                        ),
                       )
                     ],
                   )

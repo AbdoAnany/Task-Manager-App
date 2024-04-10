@@ -13,10 +13,10 @@ class TodosResponse {
   late List<TodoData>? data;
 
   TodosResponse({
-     this.limit,
-     this.skip,
-     this.total,
-     this.data,
+     this.limit=10,
+     this.skip=0,
+     this.total=0,
+     this.data=const [],
   });
 
   factory TodosResponse.fromJson(Map<String, dynamic> json) {
