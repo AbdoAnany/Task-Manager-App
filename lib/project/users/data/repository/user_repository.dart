@@ -31,13 +31,16 @@ class UserRepository {
     this.localDataSource,
     this.remoteDataSource,
   );
-  final ApiService? remoteDataSource;
+  final RemoteDataSource? remoteDataSource;
   final UserLocalDataSource? localDataSource;
 
-  Future<UserResponse?> getUsers(int id) async {
+  Future<UserResponse?> getUsers({
+    int skip=0,
+    int limit=10,
+  }) async {
     // First, try to fetch data from the local data source
     try {
-      final userResponse = await localDataSource?.getUsersFromPrefs(id);
+      final userResponse = await localDataSource?.getUsersFromPrefs(skip: skip,limit: limit);
       // Check if data is available in the local data source
       if (userResponse != null) {
         return userResponse;
@@ -49,7 +52,7 @@ class UserRepository {
 
     // If data is not available locally, fetch it from the remote data source
     try {
-      final userResponse = await remoteDataSource?.getUsers(id);
+      final userResponse = await remoteDataSource?.getUsers(limit:limit ,skip: skip);
       // Update the local data source with the fetched data
       await localDataSource?.saveUsersToPrefs(userResponse!);
       return userResponse;

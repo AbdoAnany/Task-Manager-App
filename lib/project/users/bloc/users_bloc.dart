@@ -23,21 +23,24 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
  final List<UserModel> usersList=[];
 
+  static UserModel? userModel=UserModel(id: 0, email: '', firstName: 'dsdsad', lastName: '', avatar: '');
 
   void _fetchUsers(FetchUserEvent event, Emitter<UsersState> emit) async {
     emit(UsersLoading());
     try {
-      final user = await usersRepository.getUsers(event.page);
+      final user = await usersRepository.getUsers(limit: event.limit,skip: event.skip);
       usersList.clear();
-      usersList.addAll(user!.data!.map((e) => UserModel(id: e.id!, email: e.email!, firstName: e.firstName!, lastName: e.lastName!, avatar: e.avatar!)).toList());
+      usersList.addAll(user!.data!.map((e) => UserModel(id: e.id!, email: e.email!,
+          firstName: e.firstName!, lastName: e.lastName!, avatar: e.avatar!)).toList());
       return emit(FetchUsersSuccess(
           users: usersList,
+          limit: user.limit,
 
-          page:user.page!,
-        total:user.total!,
-        totalPages:user.totalPages!,
+          page:user.page,
+        total:user.total,
+    //    totalPages:user.totalPages,
 
-        perPage:user.perPage!,
+      //  perPage:user.perPage,
       ));
     } catch (exception) {
       print("s  ssdfasdfsf exception");
@@ -91,8 +94,8 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
 
     final users =    usersList.where((element) =>
-    element.firstName.toLowerCase() .contains(event.keywords )||
-        element.lastName.toLowerCase().contains(event.keywords)).toList() ;
+    element.firstName!.toLowerCase() .contains(event.keywords )||
+        element.lastName!.toLowerCase().contains(event.keywords)).toList() ;
     return emit(FetchUsersSuccess( isSearching: true, users: users));
   }
 }

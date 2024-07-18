@@ -4,22 +4,26 @@ part 'user_response.g.dart';
 
 @JsonSerializable()
 class UserResponse {
-  late int page;
+   int? page;
   @JsonKey(name: 'per_page')
+   int? perPage;
+   int? total;
+   int? limit;
+   int? skip;
 
-  late int perPage;
-
-  late int total;
   @JsonKey(name: 'total_pages')
-  late int totalPages;
-  late List<UserData> data;
+   int? totalPages;
+   @JsonKey(name: 'users')
+   List<UserData>? data;
 
   UserResponse({
-    required this.page,
-    required this.perPage,
-    required this.total,
-    required this.totalPages,
-    required this.data,
+     this.page,
+     this.perPage,
+     this.total,
+     this.totalPages,
+     this.data,
+     this.skip=0,
+     this.limit=10,
   });
 
   factory UserResponse.fromJson(Map<String, dynamic> json) {
@@ -33,15 +37,16 @@ class UserResponse {
 
 @JsonSerializable()
 class UserData {
-  late int id;
-  late String email;
-  @JsonKey(name: 'first_name')
+  late int? id;
+  late String? email;
+  @JsonKey(name: 'firstName')
 
-  late String firstName;
-  @JsonKey(name: 'last_name')
+  late String? firstName;
+  @JsonKey(name: 'lastName')
 
-  late String lastName;
-  late String avatar;
+  late String? lastName;
+  @JsonKey(name: 'image')
+  late String? avatar;
 
   UserData({
     required this.id,

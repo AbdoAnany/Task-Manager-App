@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_manager/project/users/data/models/user_model.dart';
 
 import '../../../main.dart';
+import '../../users/bloc/users_bloc.dart';
 import '../data/local/model/task_model.dart';
 import '../data/repository/task_repository.dart';
 
@@ -23,7 +24,6 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     on<SearchTaskEvent>(_searchTasks);
   }
 
- static UserModel userModel=UserModel(id: 0, email: '', firstName: 'dsdsad', lastName: '', avatar: '');
 
   _addNewTask(AddNewTaskEvent event, Emitter<TasksState> emit) async {
     emit(TasksLoading());
@@ -42,7 +42,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       }
       await taskRepository.createNewTask(event.taskModel);
       emit(AddTasksSuccess());
-      final tasks = await taskRepository.getTasks(userModel);
+      final tasks = await taskRepository.getTasks(UsersBloc.userModel!);
 
       return emit(FetchTasksSuccess(tasks: tasks));
     } catch (exception) {
@@ -54,7 +54,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   void _fetchTasks(FetchTaskEvent event, Emitter<TasksState> emit) async {
     emit(TasksLoading());
     try {
-      final tasks = await taskRepository.getTasks(userModel);
+      final tasks = await taskRepository.getTasks(UsersBloc.userModel!);
       return emit(FetchTasksSuccess(tasks: tasks));
     } catch (exception) {
       emit(LoadTaskFailure(error: exception.toString()));

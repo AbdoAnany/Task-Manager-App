@@ -117,7 +117,7 @@ class _TaskItemViewState extends State<TaskItemView> {
                                   ),
                                   buildText(
                                       'Delete task',
-                                       ColorsManager.red,
+                                       ColorsManager.error,
                                       textMedium,
                                       FontWeight.normal,
                                       TextAlign.start,

@@ -13,8 +13,9 @@ class AddNewUserEvent extends UsersEvent {
 }
 
 class FetchUserEvent extends UsersEvent {
-   int page=1;
-  FetchUserEvent({ this.page=1});
+   int skip=0;
+   int limit=10;
+  FetchUserEvent({ this.skip=0,this.limit=10});
 
 }
 

@@ -13,6 +13,7 @@ import '../../../../routes/pages.dart';
 import '../../../../utils/color_palette.dart';
 import '../../../../utils/util.dart';
 import '../../../../components/build_text_field.dart';
+import '../../../users/bloc/users_bloc.dart';
 import '../../bloc/tasks_bloc.dart';
 
 class UpdateTaskScreen extends StatefulWidget {
@@ -81,10 +82,10 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                         listener: (context, state) {
                       if (state is UpdateTaskFailure) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            getSnackBar(state.error,  ColorsManager.red));
+                            getSnackBar(state.error,  ColorsManager.error));
                       }
                       if (state is UpdateTaskSuccess) {
-                        context.pushReplacementNamed(Pages.tasksScreen ,  arguments: TasksBloc.userModel);
+                        context.pushReplacementNamed(Pages.tasksScreen ,  arguments: UsersBloc.userModel);
 
                       }
                     }, builder: (context, state) {

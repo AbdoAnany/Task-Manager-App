@@ -1,3 +1,6 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+@JsonSerializable()
 class TaskModel {
   String id;
   String title;
@@ -7,11 +10,11 @@ class TaskModel {
   bool completed;
 
   TaskModel({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.startDateTime,
-    required this.stopDateTime,
+     this.id='',
+     this.title='',
+     this.description='',
+     this.startDateTime,
+     this.stopDateTime,
     this.completed = false,
   });
 

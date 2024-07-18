@@ -13,5 +13,7 @@ class ColorsManager {
   static const Color white = Color(0xffffffff);
   static const Color black = Color(0xff000000);
 
-  static const Color red = Color(0xffC5292A);
+  static const Color error = Color(0xffC5292A);
+  static const Color wait = Color(0xffe8a400);
+  static const Color done = Color(0xff1ba200);
 }

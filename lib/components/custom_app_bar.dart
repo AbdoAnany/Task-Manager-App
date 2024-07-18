@@ -70,8 +70,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             fit: BoxFit.cover, // Adjust how the image fits within the container
           ),
           SizedBox(width: 12.w,),
-          buildText(title,  ColorsManager.black, textXExtraLarge, FontWeight.w500,
-              TextAlign.start, TextOverflow.clip),
+          Expanded(
+            child: buildText(title,  ColorsManager.black, textXExtraLarge, FontWeight.w500,
+                TextAlign.start, TextOverflow.clip),
+          ),
         ],
       ),
     );

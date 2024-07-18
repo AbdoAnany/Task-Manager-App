@@ -8,12 +8,12 @@ part of 'api_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _ApiService implements ApiService {
-  _ApiService(
+class _RemoteDataSource implements RemoteDataSource {
+  _RemoteDataSource(
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://reqres.in/api/';
+    baseUrl ??= 'https://dummyjson.com/';
   }
 
   final Dio _dio;
@@ -35,7 +35,7 @@ class _ApiService implements ApiService {
     )
             .compose(
               _dio.options,
-              'login',
+              'auth/login',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -49,10 +49,15 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<UserResponse> getUsers(int? page) async {
+  Future<UserResponse> getUsers({
+    int limit = 0,
+    int skip = 0,
+  }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{
+      r'limit': limit,
+      r'skip': skip,
+    };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio
@@ -63,7 +68,7 @@ class _ApiService implements ApiService {
     )
             .compose(
               _dio.options,
-              'users?page=${page}',
+              'users',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -73,6 +78,180 @@ class _ApiService implements ApiService {
               baseUrl,
             ))));
     final value = UserResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TodosResponse> getTodosId(int? page) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TodosResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'todos?${page}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = TodosResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TodosResponse> getTodos({
+    int limit = 10,
+    int skip = 0,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'limit': limit,
+      r'skip': skip,
+    };
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TodosResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'todos?',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = TodosResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TodosResponse> getTodosByUserId({int id = 0}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'id': id};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TodosResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'todos/user/{id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = TodosResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TodosResponse> addTodo(Map<String, dynamic> todoData) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(todoData);
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TodosResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'add',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = TodosResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TodosResponse> updateTodoCompletedStatus(
+    int id,
+    Map<String, dynamic> updateData,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(updateData);
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TodosResponse>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'todos/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = TodosResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TodosResponse> deleteTodo(int id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TodosResponse>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'todos/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = TodosResponse.fromJson(_result.data!);
     return value;
   }
 

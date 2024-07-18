@@ -13,6 +13,7 @@ import '../../../../components/custom_app_bar.dart';
 import '../../../../routes/pages.dart';
 import '../../../../utils/color_palette.dart';
 import '../../../../components/build_text_field.dart';
+import '../../../users/bloc/users_bloc.dart';
 import '../../bloc/tasks_bloc.dart';
 
 class NewTaskScreen extends StatefulWidget {
@@ -67,11 +68,11 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                         listener: (context, state) {
                       if (state is AddTaskFailure) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            getSnackBar(state.error,  ColorsManager.red));
+                            getSnackBar(state.error,  ColorsManager.error));
                       }
                       if (state is AddTasksSuccess) {
                         Navigator.pop(context);
-                        context.pushReplacementNamed(Pages.tasksScreen ,  arguments: TasksBloc.userModel);
+                        context.pushReplacementNamed(Pages.tasksScreen ,  arguments: UsersBloc.userModel);
 
                         // context.read<TasksBloc>().add(FetchTaskEvent());
 

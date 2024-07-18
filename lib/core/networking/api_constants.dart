@@ -1,8 +1,19 @@
 class ApiConstants {
-  static const String apiBaseUrl = "https://reqres.in/api/";
+ // static const String apiBaseUrl = "https://reqres.in/api/";
+  static const String apiBaseUrl = "https://dummyjson.com/";
 
-  static const String login = "login";
-  static const String users = "users?page={page}";
+  static const String login = "auth/login";
+//  static const String login = "login";
+  static const String users = "users";
+ // static const String users = "users?page={page}";
+  static const String todosId = "todos?{id}";
+  static const String todos = "todos?";
+  static const String todosByUserId = "todos/user/{id}";
+  static const String todosById = "todos/{id}";
+
+  static const String addTodo='add';
+  static const String updateTodo='add';
+  static const String deleteTodo='add';
 
   //api/users?page
 }

@@ -13,7 +13,7 @@ import 'package:task_manager/utils/color_palette.dart';
 import 'core/di/dependency_injection.dart';
 import 'core/theming/colors.dart';
 
-
+// dart run build_runner build
 
 class Get {
   static  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
