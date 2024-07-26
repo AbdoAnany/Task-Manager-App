@@ -49,12 +49,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     Align(
                       alignment: AlignmentDirectional.centerEnd,
                       child: Row(
-                    //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Checkbox(
                             value: rememberMeValue, // rememberMeValue is a boolean variable indicating whether "Remember Me" is checked
                             onChanged: (newValue) {
-                              // Update the rememberMeValue when checkbox is toggled
                               setState(() {
                                 rememberMeValue = newValue;
                               });

@@ -17,7 +17,7 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._loginRepo) : super(const LoginState.initial());
 
   TextEditingController emailController = TextEditingController(text: 'eve.holt@reqres.in');
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordController = TextEditingController(text: "Aa@12346");
   final formKey = GlobalKey<FormState>();
 
   void emitLoginStates() async {
