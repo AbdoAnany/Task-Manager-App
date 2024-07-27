@@ -40,218 +40,216 @@ class _UserScreenState extends State<UserScreen> {
     return Scaffold(
         body: Padding(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 20.h),
-      child: SafeArea(
-        child: BlocBuilder<UsersBloc, UsersState>(builder: (context, state) {
-          if (state is UsersLoading) {
-            return const Center(
-              child: CupertinoActivityIndicator(),
-            );
-          }
+      child: BlocBuilder<UsersBloc, UsersState>(builder: (context, state) {
+        if (state is UsersLoading) {
+          return const Center(
+            child: CupertinoActivityIndicator(),
+          );
+        }
 
-          if (state is UpdateUserFailure) {
-            return Center(
-              child: buildText(state.error, ColorsManager.black, textMedium,
-                  FontWeight.normal, TextAlign.center, TextOverflow.clip),
-            );
-          }
+        if (state is UpdateUserFailure) {
+          return Center(
+            child: buildText(state.error, ColorsManager.black, textMedium,
+                FontWeight.normal, TextAlign.center, TextOverflow.clip),
+          );
+        }
 
-          if (state is FetchUsersSuccess) {
-            return state.users.isNotEmpty || state.isSearching
-                ? Column(
-                    children: [
-                      SizedBox(height: 50.h,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: BuildTextField(
-                                  hint: "Search recent users",
-                                  //   controller: searchController,
-                                  inputType: TextInputType.text,
-                                  prefixIcon: const Icon(
-                                    Icons.search,
-                                    color: ColorsManager.lightGray,
-                                  ),
-                                  fillColor: ColorsManager.white,
-                                  onChange: (value) {
-                                    if (value.length == 0) {
-                                      context.read<UsersBloc>().add(SearchUserEvent(
-                                          keywords: value,
-                                          userModel:
-                                          context.read<UsersBloc>().usersList));
-                                    } else {
-                                      context.read<UsersBloc>().add(SearchUserEvent(
-                                          keywords: value,
-                                          userModel:
-                                          context.read<UsersBloc>().usersList));
-                                    }
-                                  }),
+        if (state is FetchUsersSuccess) {
+          return state.users.isNotEmpty || state.isSearching
+              ? Column(
+                  children: [
+                    SizedBox(height: 50.h,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: BuildTextField(
+                                hint: "Search recent users",
+                                //   controller: searchController,
+                                inputType: TextInputType.text,
+                                prefixIcon: const Icon(
+                                  Icons.search,
+                                  color: ColorsManager.lightGray,
+                                ),
+                                fillColor: ColorsManager.white,
+                                onChange: (value) {
+                                  if (value.length == 0) {
+                                    context.read<UsersBloc>().add(SearchUserEvent(
+                                        keywords: value,
+                                        userModel:
+                                        context.read<UsersBloc>().usersList));
+                                  } else {
+                                    context.read<UsersBloc>().add(SearchUserEvent(
+                                        keywords: value,
+                                        userModel:
+                                        context.read<UsersBloc>().usersList));
+                                  }
+                                }),
+                          ),
+                          InkWell(onTap: (){
+                            getIt<LoginCubit>().logOut();
+                          },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(Iconsax.logout),
                             ),
-                            InkWell(onTap: (){
-                              getIt<LoginCubit>().logOut();
-                            },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(Iconsax.logout),
-                              ),
-                            )
-                          ],
-                        ),
+                          )
+                        ],
                       ),
+                    ),
 
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Expanded(
-                          child: ListView.separated(
-                        itemCount: state.users.length,
-                        itemBuilder: (context, index) {
-                          UserModel user = state.users[index];
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Expanded(
+                        child: ListView.separated(
+                      itemCount: state.users.length,
+                      itemBuilder: (context, index) {
+                        UserModel user = state.users[index];
 
 
-                          return InkWell(
-                            onTap: () {
-                              // TasksBloc.userModel=user;
-                              context
-                                  .read<TasksBloc>()
-                                  .add(SelectUserEvent(userModel: user));
-                              print(TasksBloc.userModel.id);
-                              print(TasksBloc.userModel.firstName);
-                              context.pushNamed(Pages.tasksScreen,
-                                  arguments: user);
-                            },
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 75.w,
+                        return InkWell(
+                          onTap: () {
+                            // TasksBloc.userModel=user;
+                            context
+                                .read<TasksBloc>()
+                                .add(SelectUserEvent(userModel: user));
+                            print(TasksBloc.userModel.id);
+                            print(TasksBloc.userModel.firstName);
+                            context.pushNamed(Pages.tasksScreen,
+                                arguments: user);
+                          },
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 75.w,
+                                height: 75.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                                child: CachedNetworkImage(
+                                  imageUrl: user.avatar,   width: 75.w,
                                   height: 75.w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-                                  child: CachedNetworkImage(
-                                    imageUrl: user.avatar,   width: 75.w,
-                                    height: 75.w,
-                                    imageBuilder: (context, imageProvider) => Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        image: DecorationImage(
-                                            image: imageProvider,
-                                            fit: BoxFit.cover,
-                                            
-                                            // colorFilter:
-                                            // ColorFilter.mode(Colors.red, BlendMode.colorBurn)
-                                        ),
+                                  imageBuilder: (context, imageProvider) => Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+
+                                          // colorFilter:
+                                          // ColorFilter.mode(Colors.red, BlendMode.colorBurn)
                                       ),
                                     ),
-                                    placeholder: (context, url) => Padding(
-                                      padding:  EdgeInsets.all(20.0.h),
-                                      child: CircularProgressIndicator(),
-                                    ), // Placeholder widget while loading
-                                    errorWidget: (context, url, error) => Icon(Icons.error), // Widget to display if image fails to load
-                                    fit: BoxFit.cover, // Adjust how the image fits within the container
                                   ),
+                                  placeholder: (context, url) => Padding(
+                                    padding:  EdgeInsets.all(20.0.h),
+                                    child: CircularProgressIndicator(),
+                                  ), // Placeholder widget while loading
+                                  errorWidget: (context, url, error) => Icon(Icons.error), // Widget to display if image fails to load
+                                  fit: BoxFit.cover, // Adjust how the image fits within the container
                                 ),
+                              ),
 
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      user.firstName,
-                                      style: TextStyles.font16DarkBlueMedium,
-                                    ),
-                                    Text(
-                                      user.lastName,
-                                      style: TextStyles.font16DarkBlueMedium,
-                                    ),
-                                    SizedBox(
-                                      height: 8.h,
-                                    ),
-                                    Text(
-                                      user.email,
-                                      style: TextStyles.font14GrayRegular,
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const Divider(
-                            color: ColorsManager.lightGray,
-                          );
-                        },
-                      )),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                            2,
-                            (index) => Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 8.w,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    user.firstName,
+                                    style: TextStyles.font16DarkBlueMedium,
                                   ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      if (state.page != index + 1) {
-                                        context.read<UsersBloc>().add(
-                                            FetchUserEvent(page: (index + 1)));
-                                      }
-                                    },
-                                    child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                            color: ColorsManager.primaryColor
-                                                .withOpacity(.7),
-                                            borderRadius:
-                                                BorderRadius.circular(12)),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.w, vertical: 16.h),
-                                          child: Text(
-                                            (index + 1).toString(),
-                                            style:
-                                                TextStyles.font16WhiteSemiBold,
-                                          ),
-                                        )),
+                                  Text(
+                                    user.lastName,
+                                    style: TextStyles.font16DarkBlueMedium,
                                   ),
-                                )),
-                      )
-                    ],
-                  )
-                : Center(
-                    child: Column(
+                                  SizedBox(
+                                    height: 8.h,
+                                  ),
+                                  Text(
+                                    user.email,
+                                    style: TextStyles.font14GrayRegular,
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const Divider(
+                          color: ColorsManager.lightGray,
+                        );
+                      },
+                    )),
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/svgs/tasks.svg',
-                          height: MediaQuery.of(context).size.height * .20,
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        buildText(
-                            'Schedule your tasks',
-                            ColorsManager.black,
-                            textBold,
-                            FontWeight.w600,
-                            TextAlign.center,
-                            TextOverflow.clip),
-                        buildText(
-                            'Manage your task schedule easily\nand efficiently',
-                            ColorsManager.black.withOpacity(.5),
-                            textSmall,
-                            FontWeight.normal,
-                            TextAlign.center,
-                            TextOverflow.clip),
-                      ],
-                    ),
-                  );
-          }
-          return Container();
-        }),
-      ),
+                      children: List.generate(
+                          2,
+                          (index) => Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8.w,
+                                ),
+                                child: InkWell(
+                                  onTap: () {
+                                    if (state.page != index + 1) {
+                                      context.read<UsersBloc>().add(
+                                          FetchUserEvent(page: (index + 1)));
+                                    }
+                                  },
+                                  child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                          color: ColorsManager.primaryColor
+                                              .withOpacity(.7),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20.w, vertical: 16.h),
+                                        child: Text(
+                                          (index + 1).toString(),
+                                          style:
+                                              TextStyles.font16WhiteSemiBold,
+                                        ),
+                                      )),
+                                ),
+                              )),
+                    )
+                  ],
+                )
+              : Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/svgs/tasks.svg',
+                        height: MediaQuery.of(context).size.height * .20,
+                        width: MediaQuery.of(context).size.width,
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      buildText(
+                          'Schedule your tasks',
+                          ColorsManager.black,
+                          textBold,
+                          FontWeight.w600,
+                          TextAlign.center,
+                          TextOverflow.clip),
+                      buildText(
+                          'Manage your task schedule easily\nand efficiently',
+                          ColorsManager.black.withOpacity(.5),
+                          textSmall,
+                          FontWeight.normal,
+                          TextAlign.center,
+                          TextOverflow.clip),
+                    ],
+                  ),
+                );
+        }
+        return Container();
+      }),
     ));
   }
 }
