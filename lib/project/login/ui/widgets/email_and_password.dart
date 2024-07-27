@@ -23,24 +23,23 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
   bool hasNumber = false;
   bool hasMinLength = false;
 
-  late TextEditingController passwordController;
+  // late TextEditingController passwordController;
 
   @override
   void initState() {
     super.initState();
-    passwordController = context.read<LoginCubit>().passwordController;
     setupPasswordControllerListener();
   }
 
   void setupPasswordControllerListener() {
-    passwordController.addListener(() {
+    context.read<LoginCubit>().passwordController.addListener(() {
       setState(() {
-        hasLowercase = AppRegex.hasLowerCase(passwordController.text);
-        hasUppercase = AppRegex.hasUpperCase(passwordController.text);
+        hasLowercase = AppRegex.hasLowerCase( context.read<LoginCubit>().passwordController.text);
+        hasUppercase = AppRegex.hasUpperCase( context.read<LoginCubit>().passwordController.text);
         hasSpecialCharacters =
-            AppRegex.hasSpecialCharacter(passwordController.text);
-        hasNumber = AppRegex.hasNumber(passwordController.text);
-        hasMinLength = AppRegex.hasMinLength(passwordController.text);
+            AppRegex.hasSpecialCharacter( context.read<LoginCubit>().passwordController.text);
+        hasNumber = AppRegex.hasNumber( context.read<LoginCubit>().passwordController.text);
+        hasMinLength = AppRegex.hasMinLength( context.read<LoginCubit>().passwordController.text);
       });
     });
   }
@@ -98,7 +97,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
 
   @override
   void dispose() {
-    passwordController.dispose();
+    context.read<LoginCubit>().passwordController.dispose();
     super.dispose();
   }
 }
